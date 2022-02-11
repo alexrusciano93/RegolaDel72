@@ -4,18 +4,18 @@ import model.calciatore.Calciatore;
 
 public class Voto {
     public Voto() { }
-    public Voto(int voto, int nGiornata, Calciatore calciatore) {
+    public Voto(double voto, int nGiornata, Calciatore calciatore) {
         this.voto = voto;
         this.nGiornata = nGiornata;
         this.calciatore = calciatore;
     }
-    public Voto(int voto, int nGiornata) {
+    public Voto(double voto, int nGiornata) {
         this.voto = voto;
         this.nGiornata = nGiornata;
     }
 
-    public int getVoto() { return voto; }
-    public void setVoto(int voto) { this.voto = voto; }
+    public double getVoto() { return voto; }
+    public void setVoto(double voto) { this.voto = voto; }
     public int getnGiornata() { return nGiornata; }
     public void setnGiornata(int nGiornata) { this.nGiornata = nGiornata; }
     public Calciatore getCalciatore() { return calciatore; }
@@ -30,7 +30,7 @@ public class Voto {
                 '}';
     }
 
-    private int voto;
+    private double voto;
     private int nGiornata;
     private Calciatore calciatore;
 }

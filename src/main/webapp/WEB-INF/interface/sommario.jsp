@@ -10,7 +10,7 @@
 <h2>La tua Rosa</h2>
 <div>
     <h4>Sezione Voti</h4>
-    <a href="<%=request.getContextPath()%>/index.jsp"><span>Carica Voti</span></a>
+    <a href="<%=request.getContextPath()%>/vs/carica"><span>Carica Voti</span></a>
     <a href="<%=request.getContextPath()%>/index.jsp"><span>Visualizza Voti</span></a>
 </div> <!-- Sezione voti [carica,visualizza,confronto con i consigliati] -->
 <div>

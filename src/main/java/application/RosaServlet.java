@@ -51,7 +51,6 @@ public class RosaServlet extends HttpServlet {
                 }  //Carica i calciatori da File Quotazioni
 
                 result=calDAO.doRetrieveByScelto();
-                System.out.println(result);
                 if (result.size()!=0) {
                     result = calDAO.doRetrieveBySceltoAndRuolo("P");
                     session.setAttribute("portieri", result);
@@ -78,11 +77,13 @@ public class RosaServlet extends HttpServlet {
             case "/estrai":
                 int pagina = Integer.parseInt(request.getParameter("id"));
                 String ruolo = "";
-                if (pagina == 1) ruolo = "Portieri";
-                if (pagina == 2) ruolo = "Difensori";
-                if (pagina == 3) ruolo = "Centrocampisti";
-                if (pagina == 4) ruolo = "Attaccanti";
+                int max=0;
+                if (pagina == 1) { ruolo = "Portieri";  max=3; }
+                if (pagina == 2) { ruolo = "Difensori"; max=8; }
+                if (pagina == 3) { ruolo = "Centrocampisti"; max=8; }
+                if (pagina == 4) { ruolo = "Attaccanti"; max=6; }
                 session.setAttribute("ruolo", ruolo);
+                session.setAttribute("maxGiocatori",max);
                 result= calDAO.doRetrieveByRuolo(ruolo.substring(0, 1)); //Preparo da DB la lista by Ruolo
                 session.setAttribute("giocatori", result);
                 request.getRequestDispatcher("/WEB-INF/interface/scelta.jsp").forward(request, response);

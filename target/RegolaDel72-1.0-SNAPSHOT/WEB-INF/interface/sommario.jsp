@@ -9,12 +9,26 @@
 <body>
 <h2>La tua Rosa</h2>
 <div>
-    <h4>Aggiungi:</h4>
+    <h4>Sezione Voti</h4>
+    <a href="<%=request.getContextPath()%>/vs/carica"><span>Carica Voti</span></a>
+    <a href="<%=request.getContextPath()%>/index.jsp"><span>Visualizza Voti</span></a>
+</div> <!-- Sezione voti [carica,visualizza,confronto con i consigliati] -->
+<div>
+    <h4>Sezione Regola</h4>
+    <a href="<%=request.getContextPath()%>/index.jsp"><span>Regola del 72</span></a>
+    <a href="<%=request.getContextPath()%>/index.jsp"><span>Storico</span></a>
+</div> <!-- Sezione regola72 [storico,statistiche,salva] -->
+<div>
+    <h4>Sezione BestModulo</h4>
+    <a href="<%=request.getContextPath()%>/index.jsp"><span>Modulo consigliato</span></a>
+</div> <!-- Sezione modulo [consigliato,storico,statistiche,salva] -->
+<div>
+    <h4>Seleziona Calciatori:</h4>
     <a href="<%=request.getContextPath()%>/rs/estrai?id=1"><span>Portieri</span></a>
     <a href="<%=request.getContextPath()%>/rs/estrai?id=2"><span>Difensori</span></a>
     <a href="<%=request.getContextPath()%>/rs/estrai?id=3"><span>Centrocampisti</span></a>
     <a href="<%=request.getContextPath()%>/rs/estrai?id=4"><span>Attaccanti</span></a>
-</div><!--Seleziona giocatori divisi per ruoli-->
+</div> <!-- Seleziona giocatori divisi per ruoli -->
 
 <%int i=0; ArrayList<Calciatore> portieri = (ArrayList<Calciatore>) request.getSession().getAttribute("portieri"); %>
 <h4>Portieri</h4>
@@ -45,7 +59,7 @@
             </c:forEach>
         </c:otherwise>
     </c:choose>  <!--Portieri-->
-</table>
+</table> <!--Portieri-->
 <%i=0; ArrayList<Calciatore> difensori = (ArrayList<Calciatore>) request.getSession().getAttribute("difensori"); %>
 <h4>Difensori</h4>
 <table>
@@ -75,7 +89,7 @@
             </c:forEach>
         </c:otherwise>
     </c:choose> <!--Difensori-->
-</table>
+</table> <!--Difensori-->
 
 <%i=0; ArrayList<Calciatore> centrocampisti = (ArrayList<Calciatore>) request.getSession().getAttribute("centrocampisti"); %>
 <h4>Centrocampisti</h4>
@@ -106,7 +120,7 @@
             </c:forEach>
         </c:otherwise>
     </c:choose>  <!--Centrocampisti-->
-</table>
+</table> <!--Centrocampisti-->
 
 <%i=0; ArrayList<Calciatore> attaccanti = (ArrayList<Calciatore>) request.getSession().getAttribute("attaccanti"); %>
 <h4>Attaccanti</h4>
@@ -137,7 +151,7 @@
             </c:forEach>
         </c:otherwise>
     </c:choose> <!--Attaccanti-->
-</table>
+</table> <!--Attaccanti-->
 
 </body>
 </html>
