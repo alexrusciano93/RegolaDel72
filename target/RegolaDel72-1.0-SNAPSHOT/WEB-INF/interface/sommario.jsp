@@ -7,11 +7,10 @@
     <title>Rosa</title>
 </head>
 <body>
-<h2>La tua Rosa</h2>
 <div>
     <h4>Sezione Voti</h4>
     <a href="<%=request.getContextPath()%>/vs/carica"><span>Carica Voti</span></a>
-    <a href="<%=request.getContextPath()%>/index.jsp"><span>Visualizza Voti</span></a>
+    <a href="<%=request.getContextPath()%>/vs/visualizza"><span>Visualizza Voti</span></a>
 </div> <!-- Sezione voti [carica,visualizza,confronto con i consigliati] -->
 <div>
     <h4>Sezione Regola</h4>
@@ -23,6 +22,7 @@
     <a href="<%=request.getContextPath()%>/index.jsp"><span>Modulo consigliato</span></a>
 </div> <!-- Sezione modulo [consigliato,storico,statistiche,salva] -->
 <div>
+    <h2>La tua Rosa</h2>
     <h4>Seleziona Calciatori:</h4>
     <a href="<%=request.getContextPath()%>/rs/estrai?id=1"><span>Portieri</span></a>
     <a href="<%=request.getContextPath()%>/rs/estrai?id=2"><span>Difensori</span></a>
@@ -42,9 +42,7 @@
     </tr>
     <c:choose>
         <c:when test="${portieriNull}">
-            <tr>
-                <td>Nessun Portiere selezionato</td>
-            </tr>
+            <h5>Nessun Portiere Selezionato</h5>
         </c:when>
         <c:otherwise>
             <c:forEach items="${portieri}" var="portiere">
@@ -72,9 +70,7 @@
     </tr>
     <c:choose>
         <c:when test="${difensoriNull}">
-            <tr>
-                <td>Nessun Difensore selezionato</td>
-            </tr>
+            <h5>Nessun Difensore Selezionato</h5>
         </c:when>
         <c:otherwise>
             <c:forEach items="${difensori}" var="difensore">
@@ -103,9 +99,7 @@
     </tr>
     <c:choose>
         <c:when test="${centrocampistiNull}">
-            <tr>
-                <td>Nessun Centrocampista selezionato</td>
-            </tr>
+            <h5>Nessun Centrocampista Selezionato</h5>
         </c:when>
         <c:otherwise>
             <c:forEach items="${centrocampisti}" var="centrocampista">
@@ -134,9 +128,7 @@
     </tr>
     <c:choose>
         <c:when test="${attaccantiNull}">
-            <tr>
-                <td>Nessun Attaccante selezionato</td>
-            </tr>
+            <h5>Nessun Attaccante Selezionato</h5>
         </c:when>
         <c:otherwise>
             <c:forEach items="${attaccanti}" var="attaccante">

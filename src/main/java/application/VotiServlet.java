@@ -51,8 +51,16 @@ public class VotiServlet extends HttpServlet {
                 session.setAttribute("centrocampisti",ss.getCentrocampisti());
                 session.setAttribute("attaccanti",ss.getAttaccanti());
                 int ultima= (int) session.getAttribute("ultimaGiornata");
-                ArrayList<Voto> votiSquadra=ss.caricaVotiSquadra(ultima);
-                session.setAttribute("votiSquadra",votiSquadra);
+                if (ultima>=4) {
+                    ArrayList<Voto> votiSquadra1 = ss.caricaVotiSquadra(ultima-3);
+                    ArrayList<Voto> votiSquadra2 = ss.caricaVotiSquadra(ultima-2);
+                    ArrayList<Voto> votiSquadra3 = ss.caricaVotiSquadra(ultima-1);
+                    ArrayList<Voto> votiSquadra4 = ss.caricaVotiSquadra(ultima);
+                    session.setAttribute("votiSquadra4", votiSquadra4);
+                    session.setAttribute("votiSquadra3", votiSquadra3);
+                    session.setAttribute("votiSquadra2", votiSquadra2);
+                    session.setAttribute("votiSquadra1", votiSquadra1);
+                }
                 request.getRequestDispatcher("/WEB-INF/interface/visualizzaVoti.jsp").forward(request, response);
                 break;
         }

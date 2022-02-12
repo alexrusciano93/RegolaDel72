@@ -1,6 +1,5 @@
 <%@ page import="model.calciatore.Calciatore" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="model.utils.SquadraService" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
