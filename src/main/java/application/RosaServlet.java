@@ -3,6 +3,7 @@ package application;
 import model.calciatore.Calciatore;
 import model.calciatore.CalciatoreDAO;
 import model.utils.FillDatabase;
+import model.utils.SquadraService;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -38,6 +39,10 @@ public class RosaServlet extends HttpServlet {
         String path = (request.getPathInfo() != null) ? request.getPathInfo() : "/";
         switch (path) {
             case "/sommario":
+                session.setAttribute("portieriNull", false);
+                session.setAttribute("difensoriNull", false);
+                session.setAttribute("centrocampistiNull", false);
+                session.setAttribute("attaccantiNull", false);
                 Boolean caricato = (Boolean) session.getAttribute("caricato");
                 if (caricato == null) {
                     FillDatabase db = new FillDatabase();
@@ -52,18 +57,12 @@ public class RosaServlet extends HttpServlet {
 
                 result=calDAO.doRetrieveByScelto();
                 if (result.size()!=0) {
-                    result = calDAO.doRetrieveBySceltoAndRuolo("P");
-                    session.setAttribute("portieri", result);
-                    result = calDAO.doRetrieveBySceltoAndRuolo("D");
-                    session.setAttribute("difensori", result);
-                    result = calDAO.doRetrieveBySceltoAndRuolo("C");
-                    session.setAttribute("centrocampisti", result);
-                    result = calDAO.doRetrieveBySceltoAndRuolo("A");
-                    session.setAttribute("attaccanti", result);
-                    session.setAttribute("portieriNull", false);
-                    session.setAttribute("difensoriNull", false);
-                    session.setAttribute("centrocampistiNull", false);
-                    session.setAttribute("attaccantiNull", false);
+                    SquadraService ss=new SquadraService();
+                    ss.caricaSquadra();
+                    session.setAttribute("portieri",ss.getPortieri());
+                    session.setAttribute("difensori",ss.getDifensori());
+                    session.setAttribute("centrocampisti",ss.getCentrocampisti());
+                    session.setAttribute("attaccanti",ss.getAttaccanti());
                 } // se ci sono Selezionati
                 else{
                     session.setAttribute("portieriNull", true);

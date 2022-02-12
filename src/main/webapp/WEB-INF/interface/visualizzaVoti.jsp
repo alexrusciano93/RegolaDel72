@@ -1,45 +1,25 @@
 <%@ page import="model.calciatore.Calciatore" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="model.utils.SquadraService" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="model.voto.Voto" %>
+<%@ page import="model.voto.VotoDAO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Rosa</title>
+    <title>VisualizzaVoti</title>
 </head>
 <body>
-<div>
-    <h4>Sezione Voti</h4>
-    <a href="<%=request.getContextPath()%>/vs/carica"><span>Carica Voti</span></a>
-    <a href="<%=request.getContextPath()%>/vs/visualizza"><span>Visualizza Voti</span></a>
-</div> <!-- Sezione voti [carica,visualizza,confronto con i consigliati] -->
-<div>
-    <h4>Sezione Regola</h4>
-    <a href="<%=request.getContextPath()%>/index.jsp"><span>Regola del 72</span></a>
-    <a href="<%=request.getContextPath()%>/index.jsp"><span>Storico</span></a>
-</div> <!-- Sezione regola72 [storico,statistiche,salva] -->
-<div>
-    <h4>Sezione BestModulo</h4>
-    <a href="<%=request.getContextPath()%>/index.jsp"><span>Modulo consigliato</span></a>
-</div> <!-- Sezione modulo [consigliato,storico,statistiche,salva] -->
-<div>
-    <h2>La tua Rosa</h2>
-    <h4>Seleziona Calciatori:</h4>
-    <a href="<%=request.getContextPath()%>/rs/estrai?id=1"><span>Portieri</span></a>
-    <a href="<%=request.getContextPath()%>/rs/estrai?id=2"><span>Difensori</span></a>
-    <a href="<%=request.getContextPath()%>/rs/estrai?id=3"><span>Centrocampisti</span></a>
-    <a href="<%=request.getContextPath()%>/rs/estrai?id=4"><span>Attaccanti</span></a>
-</div> <!-- Seleziona giocatori divisi per ruoli -->
-
+<%ArrayList<Voto> voti= (ArrayList<Voto>) request.getSession().getAttribute("votiSquadra");
+  int ultimaGiornata= (int) request.getSession().getAttribute("ultimaGiornata");
+  VotoDAO votoDAO=new VotoDAO();
+%>
 <%int i=0; ArrayList<Calciatore> portieri = (ArrayList<Calciatore>) request.getSession().getAttribute("portieri"); %>
 <h4>Portieri</h4>
 <table>
     <tr>
-        <th>ID</th>
         <th>Ruolo</th>
         <th>Calciatore</th>
-        <th>Squadra</th>
-        <th>Quotazione</th>
+        <th><%=ultimaGiornata%></th>
     </tr>
     <c:choose>
         <c:when test="${portieriNull}">
@@ -47,13 +27,14 @@
         </c:when>
         <c:otherwise>
             <c:forEach items="${portieri}" var="portiere">
-                <%Calciatore portiere = portieri.get(i++);%>
+                <%
+                    Calciatore portiere = portieri.get(i++);
+                    Voto y=votoDAO.doRetrieveByCalciatoreAndGiornata(ultimaGiornata,portiere.getCod());
+                  %>
                 <tr>
-                    <td><%=portiere.getCod()%></td>
                     <td><%=portiere.getRuolo()%></td>
                     <td><%=portiere.getNome()%></td>
-                    <td><%=portiere.getSquadra()%></td>
-                    <td><%=portiere.getQuotazione()%></td>
+                    <td><%=y.getVoto()%></td>
                 </tr>
             </c:forEach>
         </c:otherwise>
@@ -63,11 +44,9 @@
 <h4>Difensori</h4>
 <table>
     <tr>
-        <th>ID</th>
         <th>Ruolo</th>
         <th>Calciatore</th>
-        <th>Squadra</th>
-        <th>Quotazione</th>
+        <th><%=ultimaGiornata%></th>
     </tr>
     <c:choose>
         <c:when test="${difensoriNull}">
@@ -75,13 +54,14 @@
         </c:when>
         <c:otherwise>
             <c:forEach items="${difensori}" var="difensore">
-                <%Calciatore difensore = difensori.get(i++);%>
+                <%
+                    Calciatore difensore = difensori.get(i++);
+                    Voto y=votoDAO.doRetrieveByCalciatoreAndGiornata(ultimaGiornata,difensore.getCod());
+                %>
                 <tr>
-                    <td><%=difensore.getCod()%></td>
                     <td><%=difensore.getRuolo()%></td>
                     <td><%=difensore.getNome()%></td>
-                    <td><%=difensore.getSquadra()%></td>
-                    <td><%=difensore.getQuotazione()%></td>
+                    <td><%=y.getVoto()%></td>
                 </tr>
             </c:forEach>
         </c:otherwise>
@@ -92,11 +72,9 @@
 <h4>Centrocampisti</h4>
 <table>
     <tr>
-        <th>ID</th>
         <th>Ruolo</th>
         <th>Calciatore</th>
-        <th>Squadra</th>
-        <th>Quotazione</th>
+        <th><%=ultimaGiornata%></th>
     </tr>
     <c:choose>
         <c:when test="${centrocampistiNull}">
@@ -104,13 +82,14 @@
         </c:when>
         <c:otherwise>
             <c:forEach items="${centrocampisti}" var="centrocampista">
-                <%Calciatore centrocampista = centrocampisti.get(i++);%>
+                <%
+                    Calciatore centrocampista = centrocampisti.get(i++);
+                    Voto y=votoDAO.doRetrieveByCalciatoreAndGiornata(ultimaGiornata,centrocampista.getCod());
+                %>
                 <tr>
-                    <td><%=centrocampista.getCod()%></td>
                     <td><%=centrocampista.getRuolo()%></td>
                     <td><%=centrocampista.getNome()%></td>
-                    <td><%=centrocampista.getSquadra()%></td>
-                    <td><%=centrocampista.getQuotazione()%></td>
+                    <td><%=y.getVoto()%></td>
                 </tr>
             </c:forEach>
         </c:otherwise>
@@ -121,11 +100,9 @@
 <h4>Attaccanti</h4>
 <table>
     <tr>
-        <th>ID</th>
         <th>Ruolo</th>
         <th>Calciatore</th>
-        <th>Squadra</th>
-        <th>Quotazione</th>
+        <th><%=ultimaGiornata%></th>
     </tr>
     <c:choose>
         <c:when test="${attaccantiNull}">
@@ -133,18 +110,21 @@
         </c:when>
         <c:otherwise>
             <c:forEach items="${attaccanti}" var="attaccante">
-                <%Calciatore attaccante = attaccanti.get(i++);%>
+                <%
+                    Calciatore attaccante = attaccanti.get(i++);
+                    Voto y=votoDAO.doRetrieveByCalciatoreAndGiornata(ultimaGiornata,attaccante.getCod());
+
+                %>
                 <tr>
-                    <td><%=attaccante.getCod()%></td>
                     <td><%=attaccante.getRuolo()%></td>
                     <td><%=attaccante.getNome()%></td>
-                    <td><%=attaccante.getSquadra()%></td>
-                    <td><%=attaccante.getQuotazione()%></td>
+                    <td><%=y.getVoto()%></td>
                 </tr>
             </c:forEach>
         </c:otherwise>
     </c:choose> <!--Attaccanti-->
 </table> <!--Attaccanti-->
+
 
 </body>
 </html>

@@ -3,6 +3,8 @@ package application;
 import model.calciatore.Calciatore;
 import model.calciatore.CalciatoreDAO;
 import model.utils.FillDatabase;
+import model.utils.SquadraService;
+import model.voto.Voto;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -22,22 +24,36 @@ public class VotiServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String address = request.getServletContext().getContextPath();
+        ArrayList<Calciatore> result=new ArrayList<>();
+        SquadraService ss=new SquadraService();
         FillDatabase fill=new FillDatabase();
         String path = (request.getPathInfo() != null) ? request.getPathInfo() : "/";
         switch (path) {
             case "/carica":
+                session.setAttribute("ultimaGiornata",0);
                 request.getRequestDispatcher("/WEB-INF/interface/carica.jsp").forward(request, response);
                 break;
             case "/caricaVoti":
                 String x=request.getParameter("numGiornata");
-                System.out.println(x);
                 int giornata=Integer.parseInt(x);
+                session.setAttribute("ultimaGiornata",giornata);
                 try {
                     fill.generateVoti(giornata);
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
                 request.getRequestDispatcher("/WEB-INF/interface/carica.jsp").forward(request, response);
+                break;
+            case "/visualizza":
+                ss.caricaSquadra();
+                session.setAttribute("portieri",ss.getPortieri());
+                session.setAttribute("difensori",ss.getDifensori());
+                session.setAttribute("centrocampisti",ss.getCentrocampisti());
+                session.setAttribute("attaccanti",ss.getAttaccanti());
+                int ultima= (int) session.getAttribute("ultimaGiornata");
+                ArrayList<Voto> votiSquadra=ss.caricaVotiSquadra(ultima);
+                session.setAttribute("votiSquadra",votiSquadra);
+                request.getRequestDispatcher("/WEB-INF/interface/visualizzaVoti.jsp").forward(request, response);
                 break;
         }
 

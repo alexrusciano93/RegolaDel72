@@ -54,8 +54,8 @@ public class FillDatabase {
             }
             if (c.getQuotazione()>0)
                 votoDAO.addVoto(c,v);
-
         }
+        fileStream.close();
     }
 
     public void generateCalciatori(int scheda) throws IOException, SQLException {

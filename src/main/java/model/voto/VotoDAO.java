@@ -2,7 +2,9 @@ package model.voto;
 
 import model.calciatore.Calciatore;
 import model.utils.ConPool;
+import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * Questa classe modella le interazioni tra la classe Voto e la base di dati. Sono previsti i metodi
@@ -12,7 +14,6 @@ public class VotoDAO {
 
     /**
      * Inserisce un voto all'interno della base di dati
-     *
      * @param c il calciatore fk
      * @param v il voto da inserire
      * @return
@@ -33,6 +34,47 @@ public class VotoDAO {
         }
     }
 
-    //do Retrieve voto By Calciatore e giornata
-    //do Retrieve Lista Voti By giornata
+    /**
+     * Recupera un voto a partire dal calciatore e num. giornata
+     * @param cod l'identificativo da considerare
+     * @return calciatore
+     */
+    public Voto doRetrieveByCalciatoreAndGiornata(int nGiornata,int cod){
+        Voto v = new Voto();
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    "SELECT * FROM voto as vot WHERE vot.cal_fk=? and vot.n_giornata=?");
+            ps.setInt(1, cod);
+            ps.setInt(2,nGiornata);
+            ResultSet rs = ps.executeQuery();
+            VotoExtractor votoExt= new VotoExtractor();
+            if (rs.next())
+                v=votoExt.extract(rs);
+        } catch (SQLException | IOException ex) {
+            throw new RuntimeException(ex);
+        }
+        return v;
+    }
+
+    /**
+     * Recupera i voti facenti parte di una giornata
+     * @param nGiornata il numero della giornata
+     * @return lista di voti
+     */
+    public ArrayList<Voto> doRetrieveByGiornata(int nGiornata){
+        ArrayList<Voto> result=new ArrayList<>();
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    "SELECT * FROM voto as vot WHERE vot.n_giornata=?");
+            ps.setInt(1, nGiornata);
+            ResultSet rs = ps.executeQuery();
+            VotoExtractor votoExt= new VotoExtractor();
+            while(rs.next()) {
+                result.add(votoExt.extract(rs));
+            }
+            return result;
+        } catch (SQLException | IOException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
 }
