@@ -14,7 +14,7 @@
 </div> <!-- Sezione voti [carica,visualizza,confronto con i consigliati] -->
 <div>
     <h4>Sezione Regola</h4>
-    <a href="<%=request.getContextPath()%>/index.jsp"><span>Regola del 72</span></a>
+    <a href="<%=request.getContextPath()%>/RegS/regola"><span>Regola del 72</span></a>
     <a href="<%=request.getContextPath()%>/index.jsp"><span>Storico</span></a>
 </div> <!-- Sezione regola72 [storico,statistiche,salva] -->
 <div>

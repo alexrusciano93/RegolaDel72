@@ -21,6 +21,7 @@ public class CalciatoreExtractor implements ResultSetExtractor {
         c.setSquadra(rs.getString("cal.squadra"));
         c.setQuotazione(rs.getInt("cal.quotazione"));
         c.setScelto(rs.getBoolean("cal.scelto"));
+        c.setMedia(rs.getDouble("cal.media"));
         c.setCod(rs.getInt("cal.cod"));
         return c;
     }

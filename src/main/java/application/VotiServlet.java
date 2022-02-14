@@ -5,6 +5,7 @@ import model.calciatore.CalciatoreDAO;
 import model.utils.FillDatabase;
 import model.utils.SquadraService;
 import model.voto.Voto;
+import model.voto.VotoDAO;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -34,8 +35,14 @@ public class VotiServlet extends HttpServlet {
                 request.getRequestDispatcher("/WEB-INF/interface/carica.jsp").forward(request, response);
                 break;
             case "/caricaVoti":
+                VotoDAO votoDAO=new VotoDAO();
                 String x=request.getParameter("numGiornata");
                 int giornata=Integer.parseInt(x);
+                if (giornata>=5){
+                    giornata-=4;
+                    for (int i=giornata; i>0; i--)
+                        votoDAO.deleteByGiornata(i);
+                }
                 session.setAttribute("ultimaGiornata",giornata);
                 try {
                     fill.generateVoti(giornata);

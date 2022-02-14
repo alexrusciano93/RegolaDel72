@@ -18,14 +18,15 @@ public class CalciatoreDAO {
     public void addCalciatore(Calciatore c) throws SQLException {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
-                    "insert into regola_72.calciatore (nome, ruolo, squadra, scelto, quotazione, cod) " +
-                            "values (?,?,?,?,?,?);");
+                    "insert into regola_72.calciatore (nome, ruolo, squadra, scelto, quotazione, media, cod) " +
+                            "values (?,?,?,?,?,?,?);");
             ps.setString(1, c.getNome());
             ps.setString(2, c.getRuolo());
             ps.setString(3, c.getSquadra());
             ps.setBoolean(4,c.getScelto());
             ps.setInt(5, c.getQuotazione());
-            ps.setInt(6, c.getCod());
+            ps.setDouble(6,c.getMedia());
+            ps.setInt(7, c.getCod());
             if (ps.executeUpdate() != 1) {
                 throw new RuntimeException("INSERT error.");
             }
@@ -43,13 +44,14 @@ public class CalciatoreDAO {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
                     "UPDATE calciatore c SET c.nome = (?), c.ruolo = (?), c.squadra =(?), " +
-                            "c.quotazione=(?), c.scelto=(?) WHERE c.cod = (?);");
+                            "c.quotazione=(?), c.media=(?), c.scelto=(?) WHERE c.cod = (?);");
             ps.setString(1, c.getNome());
             ps.setString(2, c.getRuolo());
             ps.setString(3, c.getSquadra());
-            ps.setInt(4,c.getQuotazione());
-            ps.setBoolean(5, c.getScelto());
-            ps.setInt(6, c.getCod());
+            ps.setInt(4, c.getQuotazione());
+            ps.setDouble(5,c.getMedia());
+            ps.setBoolean(6,c.getScelto());
+            ps.setInt(7, c.getCod());
             if (ps.executeUpdate() != 1) {
                 throw new RuntimeException("INSERT error.");
             }

@@ -9,6 +9,7 @@
     <title>VisualizzaVoti</title>
 </head>
 <body>
+<a href="<%=request.getContextPath()%>/rs/sommario">Sommario</a>
 <%
     ArrayList<Voto> voti1= (ArrayList<Voto>) request.getSession().getAttribute("votiSquadra1");
     ArrayList<Voto> voti2= (ArrayList<Voto>) request.getSession().getAttribute("votiSquadra2");

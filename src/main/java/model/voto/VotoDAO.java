@@ -77,4 +77,22 @@ public class VotoDAO {
             throw new RuntimeException(ex);
         }
     }
+
+
+    /**
+     * Elimina una giornata di voti dalla base di dati
+     * @param giornata l'identificativo della giornata da eliminare
+     */
+    public void deleteByGiornata(int giornata){
+        try (Connection con = ConPool.getConnection()) {
+            String query ="DELETE FROM voto as vot WHERE vot.n_giornata = (?);";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, giornata);
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("DELETE error.");
+            }
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+    }
 }

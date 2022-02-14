@@ -72,6 +72,7 @@ public class FillDatabase {
             Iterator<Cell> cellIterator = row.cellIterator();
             Calciatore c = new Calciatore();
             c.setScelto(false);
+            c.setMedia(0.0);
             while (cellIterator.hasNext()) {
                 Cell cell = cellIterator.next();
                 if (riga > 2 && colonna <= 4) {

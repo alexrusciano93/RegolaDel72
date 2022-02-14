@@ -9,13 +9,21 @@ public class Calciatore {
         this.quotazione = quotazione;
         this.cod = cod;
     }
-
     public Calciatore(String nome, String ruolo, String squadra, int quotazione, Boolean scelto, int cod) {
         this.nome = nome;
         this.ruolo = ruolo;
         this.squadra = squadra;
         this.quotazione = quotazione;
         this.scelto = scelto;
+        this.cod = cod;
+    }
+    public Calciatore(String nome, String ruolo, String squadra, int quotazione, Boolean scelto, Double media, int cod) {
+        this.nome = nome;
+        this.ruolo = ruolo;
+        this.squadra = squadra;
+        this.quotazione = quotazione;
+        this.scelto = scelto;
+        this.media = media;
         this.cod = cod;
     }
 
@@ -31,6 +39,8 @@ public class Calciatore {
     public void setScelto(Boolean scelto) { this.scelto = scelto; }
     public int getCod() { return cod; }
     public void setCod(int cod) { this.cod = cod; }
+    public Double getMedia() { return media; }
+    public void setMedia(Double media) { this.media = media; }
 
     @Override
     public String toString() {
@@ -40,6 +50,7 @@ public class Calciatore {
                 ", squadra='" + squadra + '\'' +
                 ", quotazione=" + quotazione +
                 ", scelto=" + scelto +
+                ", media=" + media +
                 ", cod=" + cod +
                 '}';
     }
@@ -49,5 +60,6 @@ public class Calciatore {
     private String squadra;
     private int quotazione;
     private Boolean scelto;
+    private Double media;
     private int cod;
 }
