@@ -14,12 +14,12 @@
 </div> <!-- Sezione voti [carica,visualizza,confronto con i consigliati] -->
 <div>
     <h4>Sezione Regola</h4>
-    <a href="<%=request.getContextPath()%>/RegS/regola"><span>Regola del 72</span></a>
-    <a href="<%=request.getContextPath()%>/index.jsp"><span>Storico</span></a>
+    <a href="<%=request.getContextPath()%>/RegS/indisponibili"><span>Regola del 72</span></a>
+    <a href="<%=request.getContextPath()%>/RegS/storico"><span>Storico</span></a>
 </div> <!-- Sezione regola72 [storico,statistiche,salva] -->
 <div>
     <h4>Sezione BestModulo</h4>
-    <a href="<%=request.getContextPath()%>/index.jsp"><span>Modulo consigliato</span></a>
+    <a href="<%=request.getContextPath()%>/rs/sommario"><span>Modulo consigliato</span></a>
 </div> <!-- Sezione modulo [consigliato,storico,statistiche,salva] -->
 <div>
     <h2>La tua Rosa</h2>

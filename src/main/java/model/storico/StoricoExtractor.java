@@ -10,8 +10,9 @@ public class StoricoExtractor implements ResultSetExtractor {
     @Override
     public Storico extract(ResultSet rs) throws SQLException, IOException {
         Storico s = new Storico();
-        s.setnGiornata(rs.getInt("vot.n_giornata"));
-        s.setTotale(rs.getDouble("vot.totale"));
+        s.setnGiornata(rs.getInt("sto.n_giornata"));
+        s.setTotalePredetto(rs.getDouble("sto.totalePredetto"));
+        s.setTotaleVero(rs.getDouble("sto.totaleVero"));
         return s;
     }
 }

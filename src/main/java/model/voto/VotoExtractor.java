@@ -1,6 +1,7 @@
 package model.voto;
 
 import model.calciatore.Calciatore;
+import model.calciatore.CalciatoreDAO;
 import model.utils.ResultSetExtractor;
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -14,14 +15,14 @@ import java.sql.SQLException;
  */
 
 public class VotoExtractor implements ResultSetExtractor {
+    private CalciatoreDAO cDAO=new CalciatoreDAO();
     @Override
     public Voto extract(ResultSet rs) throws SQLException, IOException {
         Voto v = new Voto();
         v.setVoto(rs.getDouble("vot.voto"));
         v.setnGiornata(rs.getInt("vot.n_giornata"));
         int codCalciatore=rs.getInt("vot.cal_fk");
-        Calciatore c=new Calciatore();
-        c.setCod(codCalciatore);
+        Calciatore c=cDAO.doRetrieveByCod(codCalciatore);
         v.setCalciatore(c);
         return v;
     }

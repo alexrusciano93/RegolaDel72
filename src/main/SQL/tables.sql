@@ -32,7 +32,8 @@ create table storico
     idStorico          int         not null AUTO_INCREMENT
         primary key,
     n_giornata         int         not null,
-    totale             float       not null
+    totalePredetto     float       not null,
+    totaleVero         float       null
 );
 
 
@@ -41,11 +42,5 @@ create table calSto
     idCalSto           int         not null AUTO_INCREMENT
         primary key,
     cal_fk   int not null,
-    sto_fk   int not null,
-    constraint calSto_cal_fk
-        foreign key (cal_fk) references calciatore (cod)
-            on update cascade on delete cascade,
-    constraint calSto_sto_fk
-        foreign key (sto_fk) references storico (idStorico)
-            on update cascade on delete cascade
+    sto_fk   int not null
 );

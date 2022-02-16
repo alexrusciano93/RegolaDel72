@@ -9,6 +9,8 @@
     <title>VisualizzaVoti</title>
 </head>
 <body>
+<% int giornata= (int) request.getSession().getAttribute("prossimaGiornata");%>
+<h2>Prossima Giornata: <%=giornata%>° Giornata</h2>
 <a href="<%=request.getContextPath()%>/rs/sommario">Sommario</a>
 <%
     ArrayList<Voto> voti1= (ArrayList<Voto>) request.getSession().getAttribute("votiSquadra1");

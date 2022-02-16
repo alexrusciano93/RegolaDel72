@@ -996,84 +996,66 @@ ALL PRIVILEGES|regola_72
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="307" parent="293" name="calSto_cal_fk">
-      <ColNames>cal_fk</ColNames>
-      <Type>btree</Type>
-    </index>
-    <index id="308" parent="293" name="calSto_sto_fk">
-      <ColNames>sto_fk</ColNames>
-      <Type>btree</Type>
-    </index>
-    <key id="309" parent="293" name="PRIMARY">
+    <key id="307" parent="293" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>idCalSto</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="310" parent="293" name="calSto_cal_fk">
-      <ColNames>cal_fk</ColNames>
-      <RefTableName>calciatore</RefTableName>
-      <RefColNames>cod</RefColNames>
-      <OnUpdate>cascade</OnUpdate>
-      <OnDelete>cascade</OnDelete>
-    </foreign-key>
-    <foreign-key id="311" parent="293" name="calSto_sto_fk">
-      <ColNames>sto_fk</ColNames>
-      <RefTableName>storico</RefTableName>
-      <RefColNames>idStorico</RefColNames>
-      <OnUpdate>cascade</OnUpdate>
-      <OnDelete>cascade</OnDelete>
-    </foreign-key>
-    <column id="312" parent="294" name="idStorico">
+    <column id="308" parent="294" name="idStorico">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="313" parent="294" name="n_giornata">
+    <column id="309" parent="294" name="n_giornata">
       <Position>2</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="314" parent="294" name="totale">
+    <column id="310" parent="294" name="totalePredetto">
       <Position>3</Position>
       <DataType>float|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="315" parent="294" name="PRIMARY">
+    <column id="311" parent="294" name="totaleVero">
+      <Position>4</Position>
+      <DataType>float|0s</DataType>
+    </column>
+    <key id="312" parent="294" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>idStorico</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="316" parent="295" name="idVoto">
+    <column id="313" parent="295" name="idVoto">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="317" parent="295" name="n_giornata">
+    <column id="314" parent="295" name="n_giornata">
       <Position>2</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="318" parent="295" name="voto">
+    <column id="315" parent="295" name="voto">
       <Position>3</Position>
       <DataType>float|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="319" parent="295" name="cal_fk">
+    <column id="316" parent="295" name="cal_fk">
       <Position>4</Position>
       <DataType>int|0s</DataType>
     </column>
-    <index id="320" parent="295" name="voto_cal_fk">
+    <index id="317" parent="295" name="voto_cal_fk">
       <ColNames>cal_fk</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="321" parent="295" name="PRIMARY">
+    <key id="318" parent="295" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>idVoto</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="322" parent="295" name="voto_cal_fk">
+    <foreign-key id="319" parent="295" name="voto_cal_fk">
       <ColNames>cal_fk</ColNames>
       <RefTableName>calciatore</RefTableName>
       <RefColNames>cod</RefColNames>

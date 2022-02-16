@@ -2,15 +2,12 @@ package model.storico;
 
 import model.calciatore.Calciatore;
 import model.utils.ConPool;
-import model.voto.Voto;
-import model.voto.VotoExtractor;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class StoricoDAO {
 
@@ -21,10 +18,11 @@ public class StoricoDAO {
     public void addStorico(Storico s) throws SQLException {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
-                    "insert into regola_72.storico (n_giornata, totale) " +
-                            "values (?,?);");
+                    "insert into regola_72.storico (n_giornata, totalePredetto, totaleVero) " +
+                            "values (?,?,?);");
             ps.setInt(1, s.getnGiornata());
-            ps.setDouble(2, s.getTotale());
+            ps.setDouble(2, s.getTotalePredetto());
+            ps.setDouble(3,s.getTotaleVero());
             if (ps.executeUpdate() != 1) {
                 throw new RuntimeException("INSERT error.");
             }
@@ -72,4 +70,19 @@ public class StoricoDAO {
         }
     }
 
+    public boolean doChanges(Storico s){
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    "UPDATE storico s SET s.totalePredetto=(?), s.totaleVero=(?) WHERE s.n_giornata = (?);");
+            ps.setDouble(1, s.getTotalePredetto());
+            ps.setDouble(2, s.getTotaleVero());
+            ps.setInt(3, s.getnGiornata());
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("INSERT error.");
+            }
+            return true;
+        } catch(SQLException ex){
+            return false;
+        }
+    }
 }

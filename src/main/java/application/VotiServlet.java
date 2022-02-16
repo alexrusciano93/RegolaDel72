@@ -31,18 +31,24 @@ public class VotiServlet extends HttpServlet {
         String path = (request.getPathInfo() != null) ? request.getPathInfo() : "/";
         switch (path) {
             case "/carica":
-                session.setAttribute("ultimaGiornata",0);
+
                 request.getRequestDispatcher("/WEB-INF/interface/carica.jsp").forward(request, response);
                 break;
             case "/caricaVoti":
                 VotoDAO votoDAO=new VotoDAO();
                 String x=request.getParameter("numGiornata");
                 int giornata=Integer.parseInt(x);
-                if (giornata>=5){
+                int prossima=Integer.parseInt(getServletContext().getInitParameter("prossimaGiornata"));
+                if (giornata!=prossima){
+                    //errore da gestire poi con un alert
+                }
+                /*if (giornata>=5){
                     giornata-=4;
                     for (int i=giornata; i>0; i--)
                         votoDAO.deleteByGiornata(i);
-                }
+                }*/ // per cancellare i voti che non servono piu [Non Funziona!]
+                prossima++;
+                getServletContext().setInitParameter("prossimaGiornata", String.valueOf(prossima));
                 session.setAttribute("ultimaGiornata",giornata);
                 try {
                     fill.generateVoti(giornata);

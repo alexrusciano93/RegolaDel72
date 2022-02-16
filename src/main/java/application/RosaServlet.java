@@ -9,6 +9,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -70,7 +72,6 @@ public class RosaServlet extends HttpServlet {
                     session.setAttribute("centrocampistiNull", true);
                     session.setAttribute("attaccantiNull", true);
                 } //se non ci sono Selezionati
-
                 request.getRequestDispatcher("/WEB-INF/interface/sommario.jsp").forward(request, response);
                 break;
             case "/estrai":

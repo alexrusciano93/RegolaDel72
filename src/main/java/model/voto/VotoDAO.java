@@ -85,7 +85,7 @@ public class VotoDAO {
      */
     public void deleteByGiornata(int giornata){
         try (Connection con = ConPool.getConnection()) {
-            String query ="DELETE FROM voto as vot WHERE vot.n_giornata = (?);";
+            String query ="DELETE FROM voto WHERE n_giornata = (?);";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, giornata);
             if (ps.executeUpdate() != 1) {
