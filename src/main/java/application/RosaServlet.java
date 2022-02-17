@@ -2,6 +2,8 @@ package application;
 
 import model.calciatore.Calciatore;
 import model.calciatore.CalciatoreDAO;
+import model.calendario.Calendario;
+import model.calendario.CalendarioDAO;
 import model.utils.FillDatabase;
 import model.utils.SquadraService;
 import org.apache.poi.ss.usermodel.Cell;
@@ -36,11 +38,21 @@ public class RosaServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         CalciatoreDAO calDAO=new CalciatoreDAO();
+        CalendarioDAO cDAO=new CalendarioDAO();
         ArrayList<Calciatore> result;
         String address = request.getServletContext().getContextPath();
         String path = (request.getPathInfo() != null) ? request.getPathInfo() : "/";
         switch (path) {
             case "/prima":
+                FillDatabase db =new FillDatabase();
+                try {
+                    db.generateSquadre();
+                    db.generateCalendario();
+                    for (int i = 1; i < 5; i++)
+                        db.generateCalciatori(i);
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
                 session.setAttribute("prossimaGiornata",1);
                 response.sendRedirect(address + "/rs/sommario");
                 break;
@@ -49,7 +61,7 @@ public class RosaServlet extends HttpServlet {
                 session.setAttribute("difensoriNull", false);
                 session.setAttribute("centrocampistiNull", false);
                 session.setAttribute("attaccantiNull", false);
-                Boolean caricato = (Boolean) session.getAttribute("caricato");
+                /*Boolean caricato = (Boolean) session.getAttribute("caricato");
                 if (caricato == null) {
                     FillDatabase db = new FillDatabase();
                     try {
@@ -59,7 +71,7 @@ public class RosaServlet extends HttpServlet {
                         throwables.printStackTrace();
                     }
                     session.setAttribute("caricato", true);
-                }  //Carica i calciatori da File Quotazioni
+                }  */ //Carica i calciatori da File Quotazioni
 
                 result=calDAO.doRetrieveByScelto();
                 if (result.size()!=0) {
@@ -76,6 +88,10 @@ public class RosaServlet extends HttpServlet {
                     session.setAttribute("centrocampistiNull", true);
                     session.setAttribute("attaccantiNull", true);
                 } //se non ci sono Selezionati
+
+                int prossima=(int)session.getAttribute("prossimaGiornata");
+                ArrayList<Calendario> partite=cDAO.doRetrieveByGiornata(prossima);
+                session.setAttribute("partite",partite);
 
                 request.getRequestDispatcher("/WEB-INF/interface/sommario.jsp").forward(request, response);
                 break;

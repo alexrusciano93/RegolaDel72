@@ -7,8 +7,15 @@
     <title>Rosa</title>
 </head>
 <body>
+<a href="<%=request.getContextPath()%>/rs/sommario">Sommario</a>
 <% int giornata= (int) request.getSession().getAttribute("prossimaGiornata");%>
 <h2>Prossima Giornata: <%=giornata%>° Giornata</h2>
+<c:if test="${impossibileCalcolare}">
+    <div>
+        <p>Impossibile caricati meno di 4 Giornate!</p>
+        <% request.getSession().setAttribute("impossibileCalcolare",false);%>
+    </div>
+</c:if>
 
 <h4>Indica Indisponibili per la prossima giornata:</h4>
 <%

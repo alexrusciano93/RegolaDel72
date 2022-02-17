@@ -14,8 +14,8 @@ public class SquadraExtractor implements ResultSetExtractor {
     public Squadra extract(ResultSet rs) throws SQLException, IOException {
         Squadra s = new Squadra();
         s.setNome(rs.getString("squ.nome"));
-        s.setAttacco(rs.getDouble("squ.att"));
-        s.setDifesa(rs.getDouble("squ.dif"));
+        s.setAttacco(rs.getDouble("squ.attacco"));
+        s.setDifesa(rs.getDouble("squ.difesa"));
         return s;
     }
 }

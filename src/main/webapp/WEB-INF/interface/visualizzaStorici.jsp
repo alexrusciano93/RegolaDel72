@@ -7,6 +7,7 @@
     <title>Storici</title>
 </head>
 <body>
+<a href="<%=request.getContextPath()%>/rs/sommario">Sommario</a>
 <%
     int i=0;
     ArrayList<Storico> storici= (ArrayList<Storico>) request.getSession().getAttribute("storici");
@@ -20,15 +21,23 @@
         <td>Totale Realizzato</td>
         <td>Scarto</td>
     </tr>
-    <c:forEach items="${storici}" var="storico">
-        <%Storico storico = storici.get(i++);%>
-        <tr>
-            <td><%=storico.getnGiornata()%></td>
-            <td><%=storico.getTotalePredetto()%></td>
-            <td><%=storico.getTotaleVero()%></td>
-            <td><%=(storico.getTotalePredetto()-storico.getTotaleVero())%></td>
-        </tr>
-    </c:forEach>
+    <c:choose>
+        <c:when test="${storicoNull}">
+            <h5>Nessun Storico Salvato</h5>
+            <% request.getSession().setAttribute("storicoNull",false);%>
+        </c:when>
+        <c:otherwise>
+            <c:forEach items="${storici}" var="storico">
+                <%Storico storico = storici.get(i); i++;%>
+                <tr>
+                    <td><%=storico.getnGiornata()%></td>
+                    <td><%=storico.getTotalePredetto()%></td>
+                    <td><%=storico.getTotaleVero()%></td>
+                    <td><%=(storico.getTotalePredetto()-storico.getTotaleVero())%></td>
+                </tr>
+            </c:forEach>
+        </c:otherwise>
+    </c:choose>
 </table>
 </body>
 </html>

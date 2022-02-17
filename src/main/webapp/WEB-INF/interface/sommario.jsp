@@ -1,5 +1,6 @@
 <%@ page import="model.calciatore.Calciatore" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="model.calendario.Calendario" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -22,8 +23,23 @@
     <a href="<%=request.getContextPath()%>/rs/sommario"><span>Modulo consigliato</span></a>
 </div> <!-- Sezione modulo [consigliato,storico,statistiche,salva] -->
 <div>
-    <% int giornata= (int) request.getSession().getAttribute("prossimaGiornata");%>
+    <%
+        int giornata= (int) request.getSession().getAttribute("prossimaGiornata");
+        ArrayList<Calendario> partite= (ArrayList<Calendario>) request.getSession().getAttribute("partite");
+        int i=0;
+    %>
     <h2>Prossima Giornata: <%=giornata%>° Giornata</h2>
+    <table>
+    <c:forEach items="${partite}" var="partita">
+        <%Calendario partita = partite.get(i++);%>
+        <tr>
+            <td><%=partita.getCasa().getNome()%></td>
+            <td>-</td>
+            <td><%=partita.getTrasferta().getNome()%></td>
+        </tr>
+    </c:forEach>
+    </table>
+
     <h2>La tua Rosa</h2>
     <h4>Seleziona Calciatori:</h4>
     <a href="<%=request.getContextPath()%>/rs/estrai?id=1"><span>Portieri</span></a>
@@ -32,7 +48,7 @@
     <a href="<%=request.getContextPath()%>/rs/estrai?id=4"><span>Attaccanti</span></a>
 </div> <!-- Seleziona giocatori divisi per ruoli -->
 
-<%int i=0; ArrayList<Calciatore> portieri = (ArrayList<Calciatore>) request.getSession().getAttribute("portieri"); %>
+<%i=0; ArrayList<Calciatore> portieri = (ArrayList<Calciatore>) request.getSession().getAttribute("portieri"); %>
 <h4>Portieri</h4>
 <table>
     <tr>

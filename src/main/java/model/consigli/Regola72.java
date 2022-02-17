@@ -141,10 +141,8 @@ public class Regola72 {
         for (CalSto x:squadra){
             int codiceCal=x.getCalciatore().getCod();
             for (int i=0; i<giornata.size(); i++){
-                if (codiceCal==giornata.get(i).getCalciatore().getCod()){
-                    System.out.println("calciatore:"+giornata.get(i).getCalciatore().getNome()+"\n voto:"+giornata.get(i).getVoto());
+                if (codiceCal==giornata.get(i).getCalciatore().getCod())
                     tot+=giornata.get(i).getVoto();
-                }
             }
         }
         return tot;

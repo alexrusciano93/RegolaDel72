@@ -39,7 +39,7 @@ public class CalendarioDAO {
         ArrayList<Calendario> result=new ArrayList<>();
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
-                    "SELECT * FROM calendario as cal WHERE cal.n_giornata=?");
+                    "SELECT * FROM calendario as cal WHERE cal.nGiornata=?");
             ps.setInt(1, nGiornata);
             ResultSet rs = ps.executeQuery();
             CalendarioExtractor cExt= new CalendarioExtractor();
