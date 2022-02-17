@@ -7,6 +7,6 @@
 <body>
 <h1>crea la tua Rosa</h1>
 <br/>
-<a href="<%=request.getContextPath()%>/rs/sommario"><span>Iniziamo</span></a>
+<a href="<%=request.getContextPath()%>/rs/prima"><span>Iniziamo</span></a>
 </body>
 </html>

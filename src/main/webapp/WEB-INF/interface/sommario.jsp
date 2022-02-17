@@ -22,6 +22,8 @@
     <a href="<%=request.getContextPath()%>/rs/sommario"><span>Modulo consigliato</span></a>
 </div> <!-- Sezione modulo [consigliato,storico,statistiche,salva] -->
 <div>
+    <% int giornata= (int) request.getSession().getAttribute("prossimaGiornata");%>
+    <h2>Prossima Giornata: <%=giornata%>° Giornata</h2>
     <h2>La tua Rosa</h2>
     <h4>Seleziona Calciatori:</h4>
     <a href="<%=request.getContextPath()%>/rs/estrai?id=1"><span>Portieri</span></a>

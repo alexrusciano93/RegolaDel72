@@ -22,7 +22,7 @@
     <a href="<%=request.getContextPath()%>/rs/sommario"><span>Modulo consigliato</span></a>
 </div> <!-- Sezione modulo [consigliato,storico,statistiche,salva] -->
 <div>
-    <% int giornata=Integer.parseInt(config.getServletContext().getInitParameter("prossimaGiornata"));%>
+    <% int giornata= (int) request.getSession().getAttribute("prossimaGiornata");%>
     <h2>Prossima Giornata: <%=giornata%>° Giornata</h2>
     <h2>La tua Rosa</h2>
     <h4>Seleziona Calciatori:</h4>

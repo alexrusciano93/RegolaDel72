@@ -44,3 +44,21 @@ create table calSto
     cal_fk   int not null,
     sto_fk   int not null
 );
+
+create table squadra
+(
+    idSquadra       int     not null AUTO_INCREMENT
+        primary key,
+    nome            varchar(40)     not null,
+    attacco         float           not null,
+    difesa          float           not null
+);
+
+create table calendario
+(
+    idCalendario    int             not null AUTO_INCREMENT
+        primary key,
+    nGiornata       int             not null,
+    sq1_fk          varchar(40)     not null,
+    sq2_fk          varchar(40)     not null
+);

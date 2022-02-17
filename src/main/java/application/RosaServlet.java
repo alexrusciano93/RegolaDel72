@@ -40,6 +40,10 @@ public class RosaServlet extends HttpServlet {
         String address = request.getServletContext().getContextPath();
         String path = (request.getPathInfo() != null) ? request.getPathInfo() : "/";
         switch (path) {
+            case "/prima":
+                session.setAttribute("prossimaGiornata",1);
+                response.sendRedirect(address + "/rs/sommario");
+                break;
             case "/sommario":
                 session.setAttribute("portieriNull", false);
                 session.setAttribute("difensoriNull", false);
@@ -72,6 +76,7 @@ public class RosaServlet extends HttpServlet {
                     session.setAttribute("centrocampistiNull", true);
                     session.setAttribute("attaccantiNull", true);
                 } //se non ci sono Selezionati
+
                 request.getRequestDispatcher("/WEB-INF/interface/sommario.jsp").forward(request, response);
                 break;
             case "/estrai":
