@@ -20,7 +20,7 @@
 </div> <!-- Sezione regola72 [storico,statistiche,salva] -->
 <div>
     <h4>Sezione BestModulo</h4>
-    <a href="<%=request.getContextPath()%>/rs/sommario"><span>Modulo consigliato</span></a>
+    <a href="<%=request.getContextPath()%>/Modulo/indisponibili"><span>Modulo consigliato</span></a>
 </div> <!-- Sezione modulo [consigliato,storico,statistiche,salva] -->
 <div>
     <%

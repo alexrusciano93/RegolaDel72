@@ -22,6 +22,10 @@ public class Regola72 {
     public void setGiornata2(ArrayList<Voto> giornata2) { this.giornata2 = giornata2; }
     public void setGiornata3(ArrayList<Voto> giornata3) { this.giornata3 = giornata3; }
     public void setGiornata4(ArrayList<Voto> giornata4) { this.giornata4 = giornata4; }
+    public ArrayList<Calciatore> getPor() { return por; }
+    public ArrayList<Calciatore> getDif() { return dif; }
+    public ArrayList<Calciatore> getCen() { return cen; }
+    public ArrayList<Calciatore> getAtt() { return att; }
 
     public ArrayList<Calciatore> aggiornaLista(ArrayList<Calciatore> lista){
         ArrayList<Calciatore> supporto = new ArrayList<>();
@@ -112,7 +116,6 @@ public class Regola72 {
             }
         }
     }
-
     public ArrayList<Calciatore> search(){
         Calciatore x;
         //portieri
@@ -147,6 +150,7 @@ public class Regola72 {
         }
         return tot;
     }
+
 
 
     private ArrayList<Voto> giornata1,giornata2,giornata3,giornata4;
