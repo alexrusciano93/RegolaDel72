@@ -16,10 +16,10 @@ public class CalcoloDifficoltà {
             String casa,trasferta;
             casa=partita.getCasa().getNome();
             trasferta=partita.getTrasferta().getNome();
-            if (squadra.equals(casa))
-                avversario=partita.getTrasferta();
-            if (squadra.equals(trasferta))
-                avversario=partita.getCasa();
+            if (squadra.equalsIgnoreCase(casa))
+                avversario = partita.getTrasferta();
+            if (squadra.equalsIgnoreCase(trasferta))
+                avversario = partita.getCasa();
         } //devo capire con chi gioca
 
         Double attacco,difesa;

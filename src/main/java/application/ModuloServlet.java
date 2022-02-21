@@ -72,15 +72,15 @@ public class ModuloServlet extends HttpServlet {
                 reg.setGiornata1(votiSquadra1); reg.setGiornata2(votiSquadra2);
                 reg.setGiornata3(votiSquadra3); reg.setGiornata4(votiSquadra4);
                 reg.aggiornaIndisponibili(indisponibili);
-
+                reg.aggiornaVoti();
                 Modulo mod=new Modulo(reg);
                 mod.controlloModuli();
                 int g= (int) session.getAttribute("prossimaGiornata");
                 mod.controlloCalendario(cDAO.doRetrieveByGiornata(g));
                 ArrayList<Calciatore> best=mod.calcoloModuli();
                 String modulo=mod.getModuloConsigliato();
-                System.out.println(best);
-                System.out.println(modulo);
+                System.out.println("Calciatori:\n"+best);
+                System.out.println("Modulo Consigliato:"+modulo);
 
                 //Carico Lista Best e Totale predetto
                 Double somma=0.0;

@@ -60,57 +60,73 @@ public class Modulo {
         ArrayList<Calciatore> supporto=new ArrayList<>();
         Double totaleConsigliati=0.0;
         int player=0;
-        for(String x:moduliPossibili){         // Per ogni modulo trovo i migliori in base a difficolta e media
+        for(String x:moduliPossibili){// Per ogni modulo trovo i migliori in base a difficolta e media
             supporto.clear();
             String[] modulo=x.split("-");
+            regola.aggiornaLista(regola.getPor());
             Modulo.trova(regola.getPor(),difficoltaP,1,supporto);
             player=Integer.parseInt(modulo[0]);
+            regola.aggiornaLista(regola.getDif());
             Modulo.trova(regola.getDif(),difficoltaD,player,supporto);
             player=Integer.parseInt(modulo[1]);
+            regola.aggiornaLista(regola.getCen());
             Modulo.trova(regola.getCen(),difficoltaC,player,supporto);
             player=Integer.parseInt(modulo[2]);
+            regola.aggiornaLista(regola.getAtt());
             Modulo.trova(regola.getAtt(),difficoltaA,player,supporto);
             Double totale=0.0;
             for(Calciatore c: supporto){
                 totale+=c.getMedia();
             }   //Calcolo totale del modulo preso in considerazione
+            System.out.println("Modulo:"+x+" Totale:"+totale);
             if (totale>totaleConsigliati){
                 totaleConsigliati=totale;
                 moduloConsigliato=x;
-                consigliati=supporto;
+                consigliati.clear();
+                for(Calciatore c:supporto)
+                    consigliati.add(c);
             } //Salvo modulo e lista calciatori consigliati
         }
         return consigliati;
     }
-    private static void trova(ArrayList<Calciatore>lista,HashMap<Integer,Double> diff, int quanti, ArrayList<Calciatore> consigliati) {
+    private static void trova(ArrayList<Calciatore> lista,HashMap<Integer,Double> diff, int quanti, ArrayList<Calciatore> consigliati) {
         ArrayList<Calciatore> best = new ArrayList<>();
-        for (int i=0; i<quanti; i++)  //metto i primi "quanti"
+        for (int i=0; i<quanti; i++)  //Inserisco "quanti" Calciatori in Best
             best.add(lista.get(i));
 
         int altri=lista.size()-quanti;
-        if (altri>0) {                //se ci sono Altri itero su di loro
-            for (int i = quanti; i < lista.size(); i++) {
-                    Calciatore x=lista.get(i);
-                    Double diffX=diff.get(x.getCod());
-                    for(Calciatore y:best){
-                        Double diffY=diff.get(y.getCod());
-                        if (diffX<diffY){
-                            best.remove(i);
-                            best.add(i,x);
-                        }  //SE DIFFX è MINORE SOSTITUISCO
-                        if (diffX==diffY){
-                            if (x.getMedia()>y.getMedia()) {
-                                best.remove(i);
-                                best.add(i, x);
-                            }
-                        } //SE DIFFX è UGUALE A DIFFY CONTROLLO LA MEDIA
-                    }
+        if (altri>0) {//Se vi sono altri Calciatori in Lista
+            System.out.println("\nSIAMO DENTRO TROVA\nCalciatori inseriti in Best:"+best.size());
+            System.out.println("Rimasti:");
+            for (int i = quanti; i < lista.size(); i++) { // Per ogni Calciatore rimasto
+                Calciatore x=lista.get(i);
+                System.out.println(i+")"+x.getNome());
+                Double diffX=diff.get(x.getCod());
+                System.out.println("Confronto con i Best:");
+                for (int j=0; j<best.size(); j++){ // Per ogni Calciatore in Best
+                    Calciatore y=best.get(j);
+                    System.out.println("            "+y.getNome());
+                    Double diffY=diff.get(y.getCod());
+                    if (diffX<diffY){
+                            best.remove(j);
+                            best.add(j,x);
+                            break;
+                        }  //Se Difficoltà di X è Minore di Y
+                    if (diffX==diffY){
+                        if (x.getMedia()>y.getMedia()) {
+                            best.remove(j);
+                            best.add(j,x);
+                            break;
+                        }
+                    } //Se Difficoltà di X è uguale a Difficoltà di Y -> Controllo la Media tra i due
+                }
+            }
+            for(Calciatore c: best){
+                consigliati.add(c);
             }
         }       //per ognuno che rimane controllo se è migliore dei Best inseriti.
 
-        for(Calciatore x: best){
-            consigliati.add(x);
-        }
+        System.out.println("SIAMO FUORI TROVA\n");
     }
 
 
