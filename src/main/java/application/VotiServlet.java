@@ -2,6 +2,8 @@ package application;
 
 import model.calciatore.Calciatore;
 import model.calciatore.CalciatoreDAO;
+import model.calendario.Calendario;
+import model.calendario.CalendarioDAO;
 import model.utils.FillDatabase;
 import model.utils.SquadraService;
 import model.voto.Voto;
@@ -26,12 +28,12 @@ public class VotiServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String address = request.getServletContext().getContextPath();
         ArrayList<Calciatore> result=new ArrayList<>();
+        CalendarioDAO cDAO=new CalendarioDAO();
         SquadraService ss=new SquadraService();
         FillDatabase fill=new FillDatabase();
         String path = (request.getPathInfo() != null) ? request.getPathInfo() : "/";
         switch (path) {
             case "/carica":
-
                 request.getRequestDispatcher("/WEB-INF/interface/carica.jsp").forward(request, response);
                 break;
             case "/caricaVoti":
@@ -52,6 +54,8 @@ public class VotiServlet extends HttpServlet {
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
+                ArrayList<Calendario> partite=cDAO.doRetrieveByGiornata(prossima);
+                session.setAttribute("partite",partite);
                 request.getRequestDispatcher("/WEB-INF/interface/carica.jsp").forward(request, response);
                 break;
             case "/visualizza":
