@@ -14,18 +14,18 @@
     <title>Regola del 72</title>
     <style>
         body {
-            background-color: #dbc1ab;
+            background-color: #f5ece2;
         }
     </style>
 </head>
 <body>
 
-<div class="container p-5 my-5 text-white text-center " style="background-color: #c4a489">
+<div class="container p-5 my-5 text-white text-center " style="background-color: #eb9021">
     <a class="navbar-brand" href="#">
-        <img src="./img/logo.png" alt="" width="200" height="200" class="d-inline-block align-text-top rounded mx-auto d-block">
+        <img src="./img/logo.png" alt="" width="400" height="400" class="d-inline-block align-text-top rounded mx-auto d-block">
     </a>
     <h1>Crea la tua Rosa</h1>
-    <a href="<%=request.getContextPath()%>/rs/prima"><span>Iniziamo</span></a>
+    <a href="<%=request.getContextPath()%>/rs/prima" class="text-decoration-none text-light"><span>Iniziamo</span></a>
     <div class="spinner-border text-warning align-content-center" role="status" hidden>
         <span class="visually-hidden">Loading...</span>
     </div>
