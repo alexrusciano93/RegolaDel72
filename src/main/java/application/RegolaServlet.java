@@ -10,6 +10,8 @@ import model.storico.StoricoDAO;
 import model.utils.SquadraService;
 import model.voto.Voto;
 import model.voto.VotoDAO;
+import org.apache.poi.ss.usermodel.Chart;
+import org.jfree.chart.ChartUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -124,6 +126,7 @@ public class RegolaServlet extends HttpServlet {
                         // se CI SONO Storici salvati e non calcolati li Calcolo.
                     }
                 }
+                //ChartUtils.saveChartAsPNG();
                 request.getRequestDispatcher("/WEB-INF/interface/visualizzaStorici.jsp").forward(request, response);
                 break;
         }

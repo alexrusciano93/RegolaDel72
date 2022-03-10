@@ -67,7 +67,8 @@
 
 <% int giornata= (int) request.getSession().getAttribute("prossimaGiornata");%>
 <div class="row">
-    <div class="col-sm-8 p-3 text-dark">
+    <div class="col-sm-1 p-3 text-dark"></div>
+    <div class="col-sm-7 p-3 text-dark">
         <h4>Indica Indisponibili per la prossima giornata:</h4>
         <%
             int i=0;
@@ -126,12 +127,12 @@
             <input type="submit" value="Consiglia">
         </form> <!--Form per Scelta Indisponibili-->
     </div> <!--DIV INDICA INDISPONIBILI-->
-    <div class="col-sm-4 p-3 text-dark">
+    <div class="col-sm-3 p-3 text-dark">
         <%
             ArrayList<Calendario> partite= (ArrayList<Calendario>) request.getSession().getAttribute("partite");
             i=0;
         %>
-        <h2>Prossima Giornata: <%=giornata%>° Giornata</h2>
+        <h2>Prossima: <%=giornata%>° Giornata</h2>
         <table class="table table-hover table-striped">
             <c:forEach items="${partite}" var="partita">
                 <%Calendario partita = partite.get(i++);%>
@@ -143,6 +144,7 @@
             </c:forEach>
         </table>
     </div> <!--DIV PROSSIMA GIORNATA-->
+    <div class="col-sm-1 p-3 text-dark"></div>
 </div>
 
 </body>

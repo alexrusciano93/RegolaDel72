@@ -59,15 +59,17 @@
 </nav><!-- NAVBAR -->
 
 <div class="row">
-    <div class="col-sm-8 p-3 text-dark">
+    <div class="col-sm-1 p-3 text-dark"></div>
+    <div class="col-sm-7 p-3 text-dark">
         <h2>La tua Rosa</h2>
         <h4>Aggiungi Calciatori:</h4>
-        <div class="btn-group">
+        <div class="btn-group"><!-- Alert quando raggiungo il max per ogni reparto-->
             <a href="<%=request.getContextPath()%>/rs/estrai?id=1" class="btn btn-warning"><span>Portieri</span></a>
             <a href="<%=request.getContextPath()%>/rs/estrai?id=2" class="btn btn-success"><span>Difensori</span></a>
             <a href="<%=request.getContextPath()%>/rs/estrai?id=3" class="btn btn-info"><span>Centrocampisti</span></a>
             <a href="<%=request.getContextPath()%>/rs/estrai?id=4" class="btn btn-danger"><span>Attaccanti</span></a>
-        </div> <!-- Aggiungi Calciatori-->
+        </div> <!-- Aggiunta di Calciatori-->
+
 
         <div>
             <%int i=0; ArrayList<Calciatore> portieri = (ArrayList<Calciatore>) request.getSession().getAttribute("portieri"); %>
@@ -186,13 +188,13 @@
             </table> <!--Attaccanti-->
         </div>
     </div> <!--DIV ROSA ATTUALE-->
-    <div class="col-sm-4 p-3 text-dark">
+    <div class="col-sm-3 p-3 text-dark">
         <%
             int giornata= (int) request.getSession().getAttribute("prossimaGiornata");
             ArrayList<Calendario> partite= (ArrayList<Calendario>) request.getSession().getAttribute("partite");
             i=0;
         %>
-        <h2>Prossima Giornata: <%=giornata%>° Giornata</h2>
+        <h2>Prossima: <%=giornata%>° Giornata</h2>
         <table class="table table-hover table-striped">
             <c:forEach items="${partite}" var="partita">
                 <%Calendario partita = partite.get(i++);%>
@@ -204,6 +206,7 @@
             </c:forEach>
         </table>
     </div> <!--DIV PROSSIMA GIORNATA-->
+    <div class="col-sm-1 p-3 text-dark"></div>
 </div>
 
 

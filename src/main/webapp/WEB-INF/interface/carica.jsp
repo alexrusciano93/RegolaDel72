@@ -59,18 +59,19 @@
 </nav><!-- NAVBAR -->
 <div class="row">
     <%int giornata= (int) request.getSession().getAttribute("prossimaGiornata");%>
-    <div class="col-sm-8 p-3 text-dark">
+    <div class="col-sm-1 p-3 text-dark"></div>
+    <div class="col-sm-7 p-3 text-dark">
         <h4>Seleziona la giornata da Caricare:</h4>
         <% for(int i=giornata; i<39; i++){%>
         <a class="btn btn-primary" href="<%=request.getContextPath()%>/vs/caricaVoti?numGiornata=<%=i%>"><span><%=i%></span></a>
         <%}%>
     </div> <!--DIV CARICA VOTI-->
-    <div class="col-sm-4 p-3 text-dark">
+    <div class="col-sm-3 p-3 text-dark">
         <%
             ArrayList<Calendario> partite= (ArrayList<Calendario>) request.getSession().getAttribute("partite");
             int i=0;
         %>
-        <h2>Prossima Giornata: <%=giornata%>° Giornata</h2>
+        <h2>Prossima: <%=giornata%>° Giornata</h2>
         <table class="table table-hover table-striped">
             <c:forEach items="${partite}" var="partita">
                 <%Calendario partita = partite.get(i++);%>
@@ -82,6 +83,7 @@
             </c:forEach>
         </table>
     </div> <!--DIV PROSSIMA GIORNATA-->
+    <div class="col-sm-1 p-3 text-dark"></div>
 </div>
 
 </body>

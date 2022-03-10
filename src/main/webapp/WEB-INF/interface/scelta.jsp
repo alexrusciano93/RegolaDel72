@@ -4,6 +4,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
+    <!-- basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- mobile metas -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+          crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            background-color: #dbc1ab;
+        }
+    </style>
     <title>Scelta</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
@@ -19,7 +34,95 @@
             } else {
                 conta>0? conta--:null;
             }
-        }
+        } /* Conteggio Selezionati*/
+        function sortTable(n) {
+            var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+            table = document.getElementById("calciatori");
+            switching = true;
+            //Set the sorting direction to ascending:
+            dir = "asc";
+            /*Make a loop that will continue until
+            no switching has been done:*/
+            while (switching) {
+                //start by saying: no switching is done:
+                switching = false;
+                rows = table.rows;
+                /*Loop through all table rows (except the
+                first, which contains table headers):*/
+                for (i = 1; i < (rows.length - 1); i++) {
+                    //start by saying there should be no switching:
+                    shouldSwitch = false;
+                    /*Get the two elements you want to compare,
+                    one from current row and one from the next:*/
+                    x = rows[i].getElementsByTagName("TD")[n];
+                    y = rows[i + 1].getElementsByTagName("TD")[n];
+                    /*check if the two rows should switch place,
+                    based on the direction, asc or desc:*/
+                    if (dir == "asc") {
+                        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                            //if so, mark as a switch and break the loop:
+                            shouldSwitch= true;
+                            break;
+                        }
+                    } else if (dir == "desc") {
+                        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                            //if so, mark as a switch and break the loop:
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+                if (shouldSwitch) {
+                    /*If a switch has been marked, make the switch
+                    and mark that a switch has been done:*/
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    //Each time a switch is done, increase this count by 1:
+                    switchcount ++;
+                } else {
+                    /*If no switching has been done AND the direction is "asc",
+                    set the direction to "desc" and run the while loop again.*/
+                    if (switchcount == 0 && dir == "asc") {
+                        dir = "desc";
+                        switching = true;
+                    }
+                }
+            }
+        }  /*Ordinamento Toggle ASC/DESC Lettere*/
+        function sortNumber() {
+            var table, rows, switching, i, x, y, shouldSwitch;
+            table = document.getElementById("calciatori");
+            switching = true;
+            /*Make a loop that will continue until
+            no switching has been done:*/
+            while (switching) {
+                //start by saying: no switching is done:
+                switching = false;
+                rows = table.rows;
+                /*Loop through all table rows (except the
+                first, which contains table headers):*/
+                for (i = 1; i < (rows.length - 1); i++) {
+                    //start by saying there should be no switching:
+                    shouldSwitch = false;
+                    /*Get the two elements you want to compare,
+                    one from current row and one from the next:*/
+                    x = rows[i].getElementsByTagName("TD")[3];
+                    y = rows[i + 1].getElementsByTagName("TD")[3];
+                    //check if the two rows should switch place:
+                    if (Number(x.innerHTML) < Number(y.innerHTML)) {
+                        //if so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+                if (shouldSwitch) {
+                    /*If a switch has been marked, make the switch
+                    and mark that a switch has been done:*/
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                }
+            }
+        }   /*Ordinamento Toggle DESC Numeri*/
     </script>
 
 </head>
@@ -58,31 +161,45 @@
         </div>
     </div>
 </nav><!-- NAVBAR -->
+
 <%int i=0; ArrayList<Calciatore> giocatori = (ArrayList<Calciatore>) request.getSession().getAttribute("giocatori");
   int max= (int) request.getSession().getAttribute("maxGiocatori");%>
 
-<h3><c:out value="${ruolo}"></c:out></h3>
-<form action="<%=request.getContextPath()%>/rs/salva" method="post">
-    <input type="submit" value="Salva">
-    <table>
-        <tr>
-            <th>Calciatore</th>
-            <th>Ruolo</th>
-            <th>Squadra</th>
-            <th>Quotazione</th>
-        </tr>
-    <c:forEach items="${giocatori}" var="giocatore">
-        <%Calciatore giocatore = giocatori.get(i++);%>
-            <tr>
-                <td><%=giocatore.getNome()%></td>
-                <td><%=giocatore.getRuolo()%></td>
-                <td><%=giocatore.getSquadra()%></td>
-                <td><%=giocatore.getQuotazione()%></td>
-                <td><input type="checkbox" id="selezioneSquadra" name="selezioneSquadra"
-                           value="<%=giocatore.getCod()%>" onclick="ctr(this,<%=max%>)"></td>
-            </tr>
-    </c:forEach>
-    </table>
-</form>
+<div class="row">
+    <div class="col-sm-3 p-3 text-dark">
+
+    </div> <!--DIV spazio-->
+    <div class="col-sm-6 p-3 text-dark">
+        <h3><c:out value="${ruolo}"></c:out></h3>
+        <form action="<%=request.getContextPath()%>/rs/salva" method="post">
+            <input type="submit" value="Salva" class="btn btn-success">
+            <table class="table table-hover table-striped" id="calciatori">
+                <tr>
+                    <th onclick="sortTable(0)">Calciatore</th>
+                    <th>Ruolo</th>
+                    <th onclick="sortTable(2)">Squadra</th>
+                    <th onclick="sortNumber()">Quotazione</th>
+                    <th>Scegli</th>
+                </tr>
+                <c:forEach items="${giocatori}" var="giocatore">
+                    <%Calciatore giocatore = giocatori.get(i++);%>
+                    <tr>
+                        <td><%=giocatore.getNome()%></td>
+                        <td><%=giocatore.getRuolo()%></td>
+                        <td><%=giocatore.getSquadra()%></td>
+                        <td><%=giocatore.getQuotazione()%></td>
+                        <td><input type="checkbox" id="selezioneSquadra" name="selezioneSquadra"
+                                   value="<%=giocatore.getCod()%>" onclick="ctr(this,<%=max%>)"></td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </form>
+    </div> <!--DIV SCELTA X RUOLO-->
+    <div class="col-sm-3 p-3 text-dark">
+
+    </div> <!--DIV spazio-->
+</div>
+
+
 </body>
 </html>

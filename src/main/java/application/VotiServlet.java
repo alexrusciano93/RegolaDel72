@@ -1,13 +1,11 @@
 package application;
 
 import model.calciatore.Calciatore;
-import model.calciatore.CalciatoreDAO;
 import model.calendario.Calendario;
 import model.calendario.CalendarioDAO;
 import model.utils.FillDatabase;
 import model.utils.SquadraService;
 import model.voto.Voto;
-import model.voto.VotoDAO;
 
 import javax.servlet.*;
 import javax.servlet.http.*;

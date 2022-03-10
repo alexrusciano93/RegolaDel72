@@ -16,7 +16,6 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.*;
 import java.util.Iterator;
@@ -43,10 +42,14 @@ public class FillDatabase {
                 Cell cell = cellIterator.next();
                 if (colonna == 0 && cell.getCellType() == 1)
                     s.setNome(cell.getStringCellValue());
-                if (colonna == 1 && cell.getCellType() == 0)
-                    s.setAttacco(cell.getNumericCellValue());
-                if (colonna == 2 && cell.getCellType() == 0)
-                    s.setDifesa(cell.getNumericCellValue());
+                if (colonna == 1 && cell.getCellType()==2) {
+                    CellValue x=evaluator.evaluate(cell);
+                    s.setAttacco(x.getNumberValue());
+                }
+                if (colonna == 2 && cell.getCellType()==2) {
+                    CellValue x=evaluator.evaluate(cell);
+                    s.setDifesa(x.getNumberValue());
+                }
                 colonna++;
             }
             if(!s.getNome().equals("SQUADRE"))
