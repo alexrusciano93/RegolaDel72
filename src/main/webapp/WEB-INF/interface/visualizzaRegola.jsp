@@ -23,6 +23,9 @@
         .text-size{
             font-size: 26px;
         }
+        .allinea{
+            text-align: center;
+        }
     </style>
     <title>Regola72</title>
 </head>
@@ -72,7 +75,7 @@
             ArrayList<Calciatore> consigliati = (ArrayList<Calciatore>) request.getSession().getAttribute("consigliati");
         %> <!--Carico consigliati-->
         <table class="table table-hover">
-            <tr class="table-danger">
+            <tr class="table-danger allinea">
                 <th>Ruolo</th>
                 <th>Calciatore</th>
                 <th>Media</th>
@@ -81,15 +84,15 @@
             <c:forEach items="${consigliati}" var="consiglio">
                 <%Calciatore consiglio= consigliati.get(i++); %>
                 <tr class="table-light">
-                    <td><a class="btn btn-primary"><%=consiglio.getRuolo()%></a></td>
+                    <td><button class="btn btn-primary allinea"><%=consiglio.getRuolo()%></button></td>
                     <td><%=consiglio.getNome()%></td>
-                    <td><%=df.format(consiglio.getMedia())%></td>
+                    <td class="allinea"><%=df.format(consiglio.getMedia())%></td>
                 </tr>
             </c:forEach>
             <tr>
                 <td></td>
-                <td>Totale</td>
-                <td class="table-danger text-danger"><%=df.format(somma)%></td>
+                <td style="text-align: end">Totale</td>
+                <td class="table-danger text-danger allinea"><%=df.format(somma)%></td>
             </tr>
         </table> <!--Formazione Regola 72-->
         <a class="btn btn-danger" href="<%=request.getContextPath()%>/RegS/salva?reg=1"><span>Salva Formazione</span></a>

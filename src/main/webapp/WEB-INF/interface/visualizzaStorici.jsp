@@ -17,12 +17,15 @@
           crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <style>
-        <style>
+
         body {
             background-color: #f5ece2;
         }
         .text-size{
             font-size: 26px;
+        }
+        .allinea{
+            text-align: center;
         }
     </style>
     <title>Storici</title>
@@ -71,7 +74,7 @@
         %>
         <h3>Storici - Regola del 72 </h3>
         <table class="table table-hover table-striped">
-            <tr class="table-danger">
+            <tr class="table-danger allinea">
                 <td>Giornata</td>
                 <td>Totale Predetto</td>
                 <td>Totale Realizzato</td>
@@ -86,7 +89,7 @@
                     <%DecimalFormat df = new DecimalFormat("#.00");%>
                     <c:forEach items="${storici}" var="storico">
                         <%Storico storico = storici.get(i); i++;%>
-                        <tr>
+                        <tr class="allinea">
                             <td><%=storico.getnGiornata()%></td>
                             <td><%=df.format(storico.getTotalePredetto())%></td>
                             <td><%=storico.getTotaleVero()%></td>
@@ -127,7 +130,7 @@
             ArrayList<Storico> storiciModulo= (ArrayList<Storico>) request.getSession().getAttribute("storiciModulo");
         %>
         <h3>Storici - Best Modulo </h3>
-        <table class="table table-hover table-striped">
+        <table class="table table-hover table-striped allinea">
             <tr class="table-danger">
                 <td>Giornata</td>
                 <td>Totale Predetto</td>
@@ -143,7 +146,7 @@
                     <%DecimalFormat df = new DecimalFormat("#.00");%>
                     <c:forEach items="${storiciModulo}" var="storicoM">
                         <%Storico storicoM = storiciModulo.get(i); i++;%>
-                        <tr>
+                        <tr class="allinea">
                             <td><%=storicoM.getnGiornata()%></td>
                             <td><%=df.format(storicoM.getTotalePredetto())%></td>
                             <td><%=storicoM.getTotaleVero()%></td>

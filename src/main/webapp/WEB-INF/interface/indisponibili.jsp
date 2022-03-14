@@ -22,6 +22,9 @@
         .text-size{
             font-size: 26px;
         }
+        .allinea{
+            text-align: center;
+        }
     </style>
     <title>Rosa</title>
 </head>
@@ -81,7 +84,7 @@
             ArrayList<Calciatore> attaccanti = (ArrayList<Calciatore>) request.getSession().getAttribute("attaccanti");
         %>  <!--Carico gli array dei giocatori-->
         <form action="<%=request.getContextPath()%>/RegS/regola" method="post">
-            <table class="table table-hover">
+            <table class="table table-hover allinea">
                 <tr>
                     <th>Ruolo</th>
                     <th>Calciatore</th>
@@ -91,7 +94,7 @@
                     <%Calciatore portiere = portieri.get(i); i++;%>
                     <tr class="table-warning">
                         <td><%=portiere.getRuolo()%></td>
-                        <td><%=portiere.getNome()%></td>
+                        <td style="text-align: start"><%=portiere.getNome()%></td>
                         <td><input type="checkbox" id="indisponibileP" name="indisponibile"
                                    value="<%=portiere.getCod()%>"></td>
                     </tr>
@@ -101,7 +104,7 @@
                     <%Calciatore difensore = difensori.get(i); i++;%>
                     <tr class="table-success">
                         <td><%=difensore.getRuolo()%></td>
-                        <td><%=difensore.getNome()%></td>
+                        <td style="text-align: start"><%=difensore.getNome()%></td>
                         <td><input type="checkbox" id="indisponibileD" name="indisponibile"
                                    value="<%=difensore.getCod()%>"></td>
                     </tr>
@@ -111,7 +114,7 @@
                     <%Calciatore centrocampista = centrocampisti.get(i); i++;%>
                     <tr class="table-info">
                         <td><%=centrocampista.getRuolo()%></td>
-                        <td><%=centrocampista.getNome()%></td>
+                        <td style="text-align: start"><%=centrocampista.getNome()%></td>
                         <td><input type="checkbox" id="indisponibileC" name="indisponibile"
                                    value="<%=centrocampista.getCod()%>"></td>
                     </tr>
@@ -121,7 +124,7 @@
                     <%Calciatore attaccante = attaccanti.get(i); i++;%>
                     <tr class="table-danger">
                         <td><%=attaccante.getRuolo()%></td>
-                        <td><%=attaccante.getNome()%></td>
+                        <td style="text-align: start"><%=attaccante.getNome()%></td>
                         <td><input type="checkbox" id="indisponibileA" name="indisponibile"
                                    value="<%=attaccante.getCod()%>"></td>
                     </tr>

@@ -24,6 +24,9 @@
         .text-size{
             font-size: 26px;
         }
+        .allinea{
+            text-align: center;
+        }
     </style>
     <title>VisualizzaVoti</title>
 </head>
@@ -77,7 +80,7 @@
         %> <!--Prelevo gli ultimi 4 Voti -->
 
         <%int i=0; ArrayList<Calciatore> portieri = (ArrayList<Calciatore>) request.getSession().getAttribute("portieri"); %>
-        <table class="table table-hover">
+        <table class="table table-hover allinea">
             <tr>
                 <th>Ruolo</th>
                 <th>Calciatore</th>
@@ -101,7 +104,7 @@
                         %>
                         <tr class="table-warning">
                             <td><%=portiere.getRuolo()%></td>
-                            <td><%=portiere.getNome()%></td>
+                            <td style="text-align: start"><%=portiere.getNome()%></td>
                             <td><%=a.getVoto()%></td>
                             <td><%=b.getVoto()%></td>
                             <td><%=c.getVoto()%></td>
@@ -127,7 +130,7 @@
                         %>
                         <tr class="table-success">
                             <td><%=difensore.getRuolo()%></td>
-                            <td><%=difensore.getNome()%></td>
+                            <td style="text-align: start"><%=difensore.getNome()%></td>
                             <td><%=a.getVoto()%></td>
                             <td><%=b.getVoto()%></td>
                             <td><%=c.getVoto()%></td>
@@ -153,7 +156,7 @@
                         %>
                         <tr class="table-info">
                             <td><%=centrocampista.getRuolo()%></td>
-                            <td><%=centrocampista.getNome()%></td>
+                            <td style="text-align: start"><%=centrocampista.getNome()%></td>
                             <td><%=a.getVoto()%></td>
                             <td><%=b.getVoto()%></td>
                             <td><%=c.getVoto()%></td>
@@ -179,7 +182,7 @@
                         %>
                         <tr class="table-danger">
                             <td><%=attaccante.getRuolo()%></td>
-                            <td><%=attaccante.getNome()%></td>
+                            <td style="text-align: start"><%=attaccante.getNome()%></td>
                             <td><%=a.getVoto()%></td>
                             <td><%=b.getVoto()%></td>
                             <td><%=c.getVoto()%></td>

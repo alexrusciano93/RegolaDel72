@@ -22,6 +22,9 @@
         .text-size{
             font-size: 26px;
         }
+        .allinea{
+            text-align: center;
+        }
     </style>
     <title>Rosa</title>
 </head>
@@ -77,7 +80,7 @@
         <div>
             <%int i=0; ArrayList<Calciatore> portieri = (ArrayList<Calciatore>) request.getSession().getAttribute("portieri"); %>
             <h4>Portieri</h4>
-            <table class="table table-hover">
+            <table class="table table-hover allinea">
                 <tr class="table-warning">
                     <th>ID</th>
                     <th>Ruolo</th>
@@ -95,7 +98,7 @@
                             <tr class="table-warning">
                                 <td><%=portiere.getCod()%></td>
                                 <td><%=portiere.getRuolo()%></td>
-                                <td><%=portiere.getNome()%></td>
+                                <td style="text-align: start"><%=portiere.getNome()%></td>
                                 <td><%=portiere.getSquadra()%></td>
                                 <td><%=portiere.getQuotazione()%></td>
                             </tr>
@@ -105,7 +108,7 @@
             </table> <!--Portieri-->
             <%i=0; ArrayList<Calciatore> difensori = (ArrayList<Calciatore>) request.getSession().getAttribute("difensori"); %>
             <h4>Difensori</h4>
-            <table class="table table-hover">
+            <table class="table table-hover allinea">
                 <tr class="table-success">
                     <th>ID</th>
                     <th>Ruolo</th>
@@ -123,7 +126,7 @@
                             <tr class="table-success">
                                 <td><%=difensore.getCod()%></td>
                                 <td><%=difensore.getRuolo()%></td>
-                                <td><%=difensore.getNome()%></td>
+                                <td style="text-align: start"><%=difensore.getNome()%></td>
                                 <td><%=difensore.getSquadra()%></td>
                                 <td><%=difensore.getQuotazione()%></td>
                             </tr>
@@ -134,7 +137,7 @@
 
             <%i=0; ArrayList<Calciatore> centrocampisti = (ArrayList<Calciatore>) request.getSession().getAttribute("centrocampisti"); %>
             <h4>Centrocampisti</h4>
-            <table class="table table-hover">
+            <table class="table table-hover allinea">
                 <tr class="table-info">
                     <th>ID</th>
                     <th>Ruolo</th>
@@ -152,7 +155,7 @@
                             <tr class="table-info">
                                 <td><%=centrocampista.getCod()%></td>
                                 <td><%=centrocampista.getRuolo()%></td>
-                                <td><%=centrocampista.getNome()%></td>
+                                <td style="text-align: start"><%=centrocampista.getNome()%></td>
                                 <td><%=centrocampista.getSquadra()%></td>
                                 <td><%=centrocampista.getQuotazione()%></td>
                             </tr>
@@ -163,7 +166,7 @@
 
             <%i=0; ArrayList<Calciatore> attaccanti = (ArrayList<Calciatore>) request.getSession().getAttribute("attaccanti"); %>
             <h4>Attaccanti</h4>
-            <table class="table table-hover">
+            <table class="table table-hover allinea">
                 <tr class="table-danger">
                     <th>ID</th>
                     <th>Ruolo</th>
@@ -181,7 +184,7 @@
                             <tr class="table-danger">
                                 <td><%=attaccante.getCod()%></td>
                                 <td><%=attaccante.getRuolo()%></td>
-                                <td><%=attaccante.getNome()%></td>
+                                <td style="text-align: start"><%=attaccante.getNome()%></td>
                                 <td><%=attaccante.getSquadra()%></td>
                                 <td><%=attaccante.getQuotazione()%></td>
                             </tr>

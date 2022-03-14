@@ -21,6 +21,9 @@
         .text-size{
             font-size: 26px;
         }
+        .allinea{
+            text-align: center;
+        }
     </style>
     <title>Scelta</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -176,7 +179,7 @@
         <h3><c:out value="${ruolo}"></c:out></h3>
         <form action="<%=request.getContextPath()%>/rs/salva" method="post">
             <input type="submit" value="Salva" class="btn btn-success">
-            <table class="table table-hover table-striped" id="calciatori">
+            <table class="table table-hover table-striped allinea" id="calciatori">
                 <tr>
                     <th onclick="sortTable(0)">Calciatore</th>
                     <th>Ruolo</th>
@@ -187,7 +190,7 @@
                 <c:forEach items="${giocatori}" var="giocatore">
                     <%Calciatore giocatore = giocatori.get(i++);%>
                     <tr>
-                        <td><%=giocatore.getNome()%></td>
+                        <td style="text-align: start"><%=giocatore.getNome()%></td>
                         <td><%=giocatore.getRuolo()%></td>
                         <td><%=giocatore.getSquadra()%></td>
                         <td><%=giocatore.getQuotazione()%></td>

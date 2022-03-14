@@ -25,7 +25,7 @@
         <img src="./img/logo.png" alt="" width="400" height="400" class="d-inline-block align-text-top rounded mx-auto d-block">
     </a>
     <h1>Crea la tua Rosa</h1>
-    <a href="<%=request.getContextPath()%>/rs/prima" class="text-decoration-none text-light"><span>Iniziamo</span></a>
+    <a href="<%=request.getContextPath()%>/rs/prima" class="text-decoration-none text-light"><span class="btn btn-danger">Iniziamo</span></a>
     <div class="spinner-border text-warning align-content-center" role="status" hidden>
         <span class="visually-hidden">Loading...</span>
     </div>
