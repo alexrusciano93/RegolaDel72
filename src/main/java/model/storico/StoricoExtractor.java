@@ -13,6 +13,7 @@ public class StoricoExtractor implements ResultSetExtractor {
         s.setnGiornata(rs.getInt("sto.n_giornata"));
         s.setTotalePredetto(rs.getDouble("sto.totalePredetto"));
         s.setTotaleVero(rs.getDouble("sto.totaleVero"));
+        s.setRegola(rs.getBoolean("sto.regola"));
         return s;
     }
 }

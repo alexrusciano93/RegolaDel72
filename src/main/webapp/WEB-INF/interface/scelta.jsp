@@ -18,6 +18,9 @@
         body {
             background-color: #f5ece2;
         }
+        .text-size{
+            font-size: 26px;
+        }
     </style>
     <title>Scelta</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -134,7 +137,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-size">
                 <li class="nav-item">
                     <a class="nav-link text-decoration-none text-dark" href="<%=request.getContextPath()%>/rs/sommario">Home</a>
                 </li>

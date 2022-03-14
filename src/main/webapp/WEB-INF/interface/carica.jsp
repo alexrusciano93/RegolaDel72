@@ -18,6 +18,9 @@
         body {
             background-color: #f5ece2;
         }
+        .text-size{
+            font-size: 26px;
+        }
     </style>
     <title>CaricaVoti</title>
 </head>
@@ -30,7 +33,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-size">
                 <li class="nav-item">
                     <a class="nav-link text-decoration-none text-dark" href="<%=request.getContextPath()%>/rs/sommario">Home</a>
                 </li>
@@ -57,6 +60,7 @@
         </div>
     </div>
 </nav><!-- NAVBAR -->
+
 <div class="row">
     <%int giornata= (int) request.getSession().getAttribute("prossimaGiornata");%>
     <div class="col-sm-1 p-3 text-dark"></div>

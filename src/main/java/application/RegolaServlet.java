@@ -87,46 +87,84 @@ public class RegolaServlet extends HttpServlet {
                 break;
             case "/salva":
                 ArrayList<Calciatore> lista= (ArrayList<Calciatore>) session.getAttribute("consigliati");
+                int regola=Integer.parseInt(request.getParameter("reg"));
                 int giornata= (int) session.getAttribute("ultimaGiornata");
                 Double tot= (Double) session.getAttribute("sommaConsigliati"); //Recupero 11,totale e giornata.
-                Storico salva=new Storico();
+                Storico salva=new Storico(); //Creo nuovo storico da salvare
                 giornata++;
                 salva.setnGiornata(giornata);
                 salva.setTotalePredetto(tot);
                 salva.setTotaleVero(0.0);
-                stoDAO=new StoricoDAO();
+                if (regola==1)
+                    salva.setRegola(true);
+                else
+                    salva.setRegola(false); // setto parametri Storico
+
                 try { stoDAO.addStorico(salva); } //Salvo la predizione nel DB
                 catch (SQLException throwables) { throwables.printStackTrace(); }
+
                 for (Calciatore x:lista){ csDAO.addCalSto(x,salva); } //Salvo i calciatori che formano quell'11
-                ArrayList<Storico> statistiche= (ArrayList<Storico>)session.getAttribute("storici");
-                if (statistiche==null)
-                    statistiche = new ArrayList<>();
-                statistiche.add(salva); //Salvo in Sessione gli storici per visualizzarli
-                session.setAttribute("storici",statistiche);
+
+                ArrayList<Storico> statisticheRegola= (ArrayList<Storico>)session.getAttribute("storici");
+                ArrayList<Storico> statisticheModulo= (ArrayList<Storico>)session.getAttribute("storiciModulo");
+                if (statisticheRegola==null)
+                    statisticheRegola = new ArrayList<>();
+                if (statisticheModulo==null)
+                    statisticheModulo = new ArrayList<>();
+
+                if (regola==1)
+                    statisticheRegola.add(salva);
+                else
+                    statisticheModulo.add(salva);
+                session.setAttribute("storici",statisticheRegola);
+                session.setAttribute("storiciModulo",statisticheModulo); //Salvo in Sessione gli storici x Regola e x Modulo per visualizzarli
                 request.getRequestDispatcher("/WEB-INF/interface/visualizzaRegola.jsp").forward(request, response);
                 break;
             case "/storico":
-                statistiche= (ArrayList<Storico>) session.getAttribute("storici");
-                if (statistiche==null)
-                    session.setAttribute("storicoNull",true); //se NON CI SONO Storici salvati
+                statisticheRegola= (ArrayList<Storico>) session.getAttribute("storici");
+                if (statisticheRegola==null)
+                    session.setAttribute("storicoNull",true); //se NON CI SONO Storici x Regola salvati
                 else{
                     int prossima=(int) session.getAttribute("prossimaGiornata");
-                    for(int i=0; i<statistiche.size(); i++){
-                        Storico x=statistiche.get(i);
+                    for(int i=0; i<statisticheRegola.size(); i++){
+                        Storico x=statisticheRegola.get(i);
                         if (x.getTotaleVero()==0.0 && x.getnGiornata()<prossima){
                             ArrayList<CalSto> oldSquadra=csDAO.doRetrieveCalciatoriWithStorico(x.getnGiornata());
                             ArrayList<Voto> oldVoto=votoDAO.doRetrieveByGiornata(x.getnGiornata());
                             Double trueTot=reg.calcolaTot(oldSquadra,oldVoto);
+                            if (oldSquadra.size()>11)
+                                trueTot=trueTot/2;
                             x.setTotaleVero(trueTot);
                             stoDAO.doChanges(x);
-                            statistiche.remove(i);
-                            statistiche.add(i,x);
-                            session.setAttribute("storici",statistiche);
-                        }
-                        // se CI SONO Storici salvati e non calcolati li Calcolo.
+                            statisticheRegola.remove(i);
+                            statisticheRegola.add(i,x);
+                            session.setAttribute("storici",statisticheRegola);
+                        }// se CI SONO Storici salvati e non calcolati li Calcolo.
                     }
-                }
-                //ChartUtils.saveChartAsPNG();
+                } //calcolo storici non calcolati
+
+                statisticheModulo= (ArrayList<Storico>) session.getAttribute("storiciModulo");
+                if (statisticheModulo==null)
+                    session.setAttribute("storicoModuloNull",true); //se NON CI SONO Storici x Modulo salvati
+                else{
+                    int prossima=(int) session.getAttribute("prossimaGiornata");
+                    for(int i=0; i<statisticheModulo.size(); i++){
+                        Storico x=statisticheModulo.get(i);
+                        if (x.getTotaleVero()==0.0 && x.getnGiornata()<prossima){
+                            ArrayList<CalSto> oldSquadra=csDAO.doRetrieveCalciatoriWithStorico(x.getnGiornata());
+                            ArrayList<Voto> oldVoto=votoDAO.doRetrieveByGiornata(x.getnGiornata());
+                            Double trueTot=reg.calcolaTot(oldSquadra,oldVoto);
+                            if (oldSquadra.size()>11)
+                                trueTot=trueTot/2;
+                            x.setTotaleVero(trueTot);
+                            stoDAO.doChanges(x);
+                            statisticheModulo.remove(i);
+                            statisticheModulo.add(i,x);
+                            session.setAttribute("storiciModulo",statisticheModulo);
+                        }// se CI SONO Storici salvati e non calcolati li Calcolo.
+                    }
+                } //calcolo storici non calcolati
+
                 request.getRequestDispatcher("/WEB-INF/interface/visualizzaStorici.jsp").forward(request, response);
                 break;
         }

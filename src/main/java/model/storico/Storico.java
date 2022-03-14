@@ -32,12 +32,21 @@ public class Storico {
     public Double getTotaleVero() { return totaleVero; }
     public void setTotaleVero(Double totaleVero) { this.totaleVero = totaleVero; }
 
+    public Boolean getRegola() {
+        return regola;
+    }
+
+    public void setRegola(Boolean regola) {
+        this.regola = regola;
+    }
+
     @Override
     public String toString() {
         return "Storico{" +
                 "nGiornata=" + nGiornata +
                 ", totalePredetto=" + totalePredetto +
                 ", totaleVero=" + totaleVero +
+                ", regola=" + regola +
                 ", squadra=" + squadra +
                 '}';
     }
@@ -45,5 +54,6 @@ public class Storico {
     private int nGiornata;
     private Double totalePredetto;
     private Double totaleVero;
+    private Boolean regola;
     ArrayList<Calciatore> squadra;
 }

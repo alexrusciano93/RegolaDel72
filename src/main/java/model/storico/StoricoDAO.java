@@ -18,11 +18,12 @@ public class StoricoDAO {
     public void addStorico(Storico s) throws SQLException {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
-                    "insert into regola_72.storico (n_giornata, totalePredetto, totaleVero) " +
-                            "values (?,?,?);");
+                    "insert into regola_72.storico (n_giornata, totalePredetto, totaleVero, regola) " +
+                            "values (?,?,?,?);");
             ps.setInt(1, s.getnGiornata());
             ps.setDouble(2, s.getTotalePredetto());
             ps.setDouble(3,s.getTotaleVero());
+            ps.setBoolean(4,s.getRegola());
             if (ps.executeUpdate() != 1) {
                 throw new RuntimeException("INSERT error.");
             }
@@ -73,10 +74,11 @@ public class StoricoDAO {
     public boolean doChanges(Storico s){
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
-                    "UPDATE storico s SET s.totalePredetto=(?), s.totaleVero=(?) WHERE s.n_giornata = (?);");
+                    "UPDATE storico s SET s.totalePredetto=(?), s.totaleVero=(?) WHERE s.n_giornata = (?) AND s.regola=(?);");
             ps.setDouble(1, s.getTotalePredetto());
             ps.setDouble(2, s.getTotaleVero());
             ps.setInt(3, s.getnGiornata());
+            ps.setBoolean(4,s.getRegola());
             if (ps.executeUpdate() != 1) {
                 throw new RuntimeException("INSERT error.");
             }

@@ -1,6 +1,7 @@
 <%@ page import="model.calciatore.Calciatore" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="model.calendario.Calendario" %>
+<%@ page import="java.text.DecimalFormat" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -19,6 +20,9 @@
         body {
             background-color: #f5ece2;
         }
+        .text-size{
+            font-size: 26px;
+        }
     </style>
     <title>BestModulo</title>
 </head>
@@ -30,7 +34,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-size">
                 <li class="nav-item">
                     <a class="nav-link text-decoration-none text-dark" href="<%=request.getContextPath()%>/rs/sommario">Home</a>
                 </li>
@@ -73,22 +77,23 @@
                 <th>Calciatore</th>
                 <th>Media</th>
             </tr>
+            <%DecimalFormat df = new DecimalFormat("#.00");%>
             <c:forEach items="${consigliati}" var="consiglio">
                 <%Calciatore consiglio= consigliati.get(i++); %>
                 <tr class="table-light">
                     <td><a class="btn btn-primary"><%=consiglio.getRuolo()%></a></td>
                     <td><%=consiglio.getNome()%></td>
-                    <td><%=consiglio.getMedia()%></td>
+                    <td><%=df.format(consiglio.getMedia())%></td>
                 </tr>
             </c:forEach>
             <tr>
                 <td></td>
                 <td>Totale</td>
-                <td class="table-danger text-danger"><%=somma%></td>
+                <td class="table-danger text-danger"><%=df.format(somma)%></td>
             </tr>
-        </table> <!--Formazione Regola 72-->
-        <a class="btn btn-danger" href="<%=request.getContextPath()%>/RegS/salva"><span>Salva Formazione</span></a>
-    </div> <!--DIV VISUALIZZA REGOLA -->
+        </table> <!--Formazione BEST MODULO-->
+        <a class="btn btn-danger" href="<%=request.getContextPath()%>/RegS/salva?reg=0"><span>Salva Formazione</span></a>
+    </div> <!--DIV VISUALIZZA MODULO -->
     <div class="col-sm-3 p-3 text-dark">
         <%
             ArrayList<Calendario> partite= (ArrayList<Calendario>) request.getSession().getAttribute("partite");

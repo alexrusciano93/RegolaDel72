@@ -1,6 +1,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="model.storico.Storico" %>
 <%@ page import="model.calendario.Calendario" %>
+<%@ page import="java.text.DecimalFormat" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -16,8 +17,12 @@
           crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <style>
+        <style>
         body {
             background-color: #f5ece2;
+        }
+        .text-size{
+            font-size: 26px;
         }
     </style>
     <title>Storici</title>
@@ -30,7 +35,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-size">
                 <li class="nav-item">
                     <a class="nav-link text-decoration-none text-dark" href="<%=request.getContextPath()%>/rs/sommario">Home</a>
                 </li>
@@ -62,10 +67,9 @@
 <div class="row">
     <div class="col-sm-1 p-3 text-dark"></div>
     <div class="col-sm-7 p-3 text-dark">
-        <%
-            int i=0;
-            ArrayList<Storico> storici= (ArrayList<Storico>) request.getSession().getAttribute("storici");
+        <%int i=0; ArrayList<Storico> storici= (ArrayList<Storico>) request.getSession().getAttribute("storici");
         %>
+        <h3>Storici - Regola del 72 </h3>
         <table class="table table-hover table-striped">
             <tr class="table-danger">
                 <td>Giornata</td>
@@ -79,19 +83,23 @@
                     <% request.getSession().setAttribute("storicoNull",false);%>
                 </c:when>
                 <c:otherwise>
+                    <%DecimalFormat df = new DecimalFormat("#.00");%>
                     <c:forEach items="${storici}" var="storico">
                         <%Storico storico = storici.get(i); i++;%>
                         <tr>
                             <td><%=storico.getnGiornata()%></td>
-                            <td><%=storico.getTotalePredetto()%></td>
+                            <td><%=df.format(storico.getTotalePredetto())%></td>
                             <td><%=storico.getTotaleVero()%></td>
-                            <td><%=(storico.getTotalePredetto()-storico.getTotaleVero())%></td>
+                            <%Double scarto=storico.getTotalePredetto()-storico.getTotaleVero();
+                                if (scarto<0)
+                                    scarto=scarto*(-1);%>
+                            <td><%=df.format(scarto)%></td>
                         </tr>
                     </c:forEach>
                 </c:otherwise>
             </c:choose>
         </table>
-    </div> <!--DIV VISUALIZZA STORICI -->
+    </div> <!--DIV VISUALIZZA STORICI REGOLA-->
     <div class="col-sm-3 p-3 text-dark">
         <%
             ArrayList<Calendario> partite= (ArrayList<Calendario>) request.getSession().getAttribute("partite");
@@ -111,6 +119,45 @@
     </div> <!--DIV PROSSIMA GIORNATA-->
     <div class="col-sm-1 p-3 text-dark"></div>
 </div>
-
+<div class="row">
+    <div class="col-sm-1 p-3 text-dark"></div>
+    <div class="col-sm-7 p-3 text-dark">
+        <%
+            i=0;
+            ArrayList<Storico> storiciModulo= (ArrayList<Storico>) request.getSession().getAttribute("storiciModulo");
+        %>
+        <h3>Storici - Best Modulo </h3>
+        <table class="table table-hover table-striped">
+            <tr class="table-danger">
+                <td>Giornata</td>
+                <td>Totale Predetto</td>
+                <td>Totale Realizzato</td>
+                <td>Scarto</td>
+            </tr>
+            <c:choose>
+                <c:when test="${storicoModuloNull}">
+                    <h5>Nessun Storico Salvato</h5>
+                    <% request.getSession().setAttribute("storicoModuloNull",false);%>
+                </c:when>
+                <c:otherwise>
+                    <%DecimalFormat df = new DecimalFormat("#.00");%>
+                    <c:forEach items="${storiciModulo}" var="storicoM">
+                        <%Storico storicoM = storiciModulo.get(i); i++;%>
+                        <tr>
+                            <td><%=storicoM.getnGiornata()%></td>
+                            <td><%=df.format(storicoM.getTotalePredetto())%></td>
+                            <td><%=storicoM.getTotaleVero()%></td>
+                            <%Double scarto=storicoM.getTotalePredetto()-storicoM.getTotaleVero();
+                            if (scarto<0)
+                                scarto=scarto*(-1);%>
+                            <td><%=df.format(scarto)%></td>
+                        </tr>
+                    </c:forEach>
+                </c:otherwise>
+            </c:choose>
+        </table>
+    </div> <!--DIV VISUALIZZA STORICI MODULO-->
+    <div class="col-sm-4 p-3 text-dark"></div>
+</div>
 </body>
 </html>

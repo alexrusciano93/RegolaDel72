@@ -33,7 +33,8 @@ create table storico
         primary key,
     n_giornata         int         not null,
     totalePredetto     float       not null,
-    totaleVero         float       null
+    totaleVero         float       null,
+    regola             boolean     not null
 );
 
 
