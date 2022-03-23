@@ -95,7 +95,7 @@
                 <td class="table-danger text-danger allinea"><%=df.format(somma)%></td>
             </tr>
         </table> <!--Formazione BEST MODULO-->
-        <a class="btn btn-danger" href="<%=request.getContextPath()%>/RegS/salva?reg=0"><span>Salva Formazione</span></a>
+        <a class="btn btn-danger" href="<%=request.getContextPath()%>/RegS/salva?reg=0" onclick="confermaSalva()"><span>Salva Formazione</span></a>
     </div> <!--DIV VISUALIZZA MODULO -->
     <div class="col-sm-3 p-3 text-dark">
         <%
@@ -116,5 +116,10 @@
     </div> <!--DIV PROSSIMA GIORNATA-->
     <div class="col-sm-1 p-3 text-dark"></div>
 </div>
+<script>
+    function confermaSalva() {
+        alert("Formazione Salvata!");
+    }
+</script>
 </body>
 </html>

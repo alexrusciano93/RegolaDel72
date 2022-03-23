@@ -95,7 +95,7 @@
                 <td class="table-danger text-danger allinea"><%=df.format(somma)%></td>
             </tr>
         </table> <!--Formazione Regola 72-->
-        <a class="btn btn-danger" href="<%=request.getContextPath()%>/RegS/salva?reg=1"><span>Salva Formazione</span></a>
+        <a class="btn btn-danger" href="<%=request.getContextPath()%>/RegS/salva?reg=1" onclick="confermaSalva()"><span>Salva Formazione</span></a>
     </div> <!--DIV VISUALIZZA REGOLA -->
     <div class="col-sm-3 p-3 text-dark">
         <%
@@ -117,5 +117,10 @@
     <div class="col-sm-1 p-3 text-dark"></div>
 </div>
 
+<script>
+    function confermaSalva() {
+        alert("Formazione Salvata!");
+    }
+</script>
 </body>
 </html>
