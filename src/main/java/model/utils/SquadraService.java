@@ -43,6 +43,7 @@ public class SquadraService {
     }
 
     //CARICAMENTO VOTI PER LA SQUADRA SELEZIONATA
+
     public void caricaVotiPortieri(int giornata,ArrayList<Voto> result){
         for(Calciatore x:portieri){
             Voto y=votoDAO.doRetrieveByCalciatoreAndGiornata(giornata,x.getCod());
@@ -67,6 +68,8 @@ public class SquadraService {
             result.add(y);
         }
     }
+
+
     public ArrayList<Voto> caricaVotiSquadra(int giornata){
         ArrayList<Voto> result=new ArrayList<>();
         caricaVotiPortieri(giornata,result);

@@ -60,7 +60,8 @@ public class FillDatabase {
     public void generateCalendario() throws IOException, SQLException {
         SquadraDAO sDAO=new SquadraDAO();
         CalendarioDAO cDAO=new CalendarioDAO();
-        File file=new File("C:\\Users\\arusc\\OneDrive\\Desktop\\DATASET TESI\\calendarioSerieA.xlsx");
+        File file=new File("C:\\Users\\arusc\\OneDrive\\Desktop\\DATASET TESI\\" +
+                "calendarioSerieA.xlsx");
         FileInputStream fileStream=new FileInputStream(file);
         XSSFWorkbook workbook = new XSSFWorkbook(fileStream);
         FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
@@ -96,7 +97,8 @@ public class FillDatabase {
     public void generateVoti(int i) throws IOException, SQLException {
         VotoDAO votoDAO=new VotoDAO();
         CalciatoreDAO calDAO=new CalciatoreDAO();
-        File file=new File("C:\\Users\\arusc\\OneDrive\\Desktop\\DATASET TESI\\voti anno 21-22\\VotiGiornata"+i+".xlsx");
+        File file=new File("C:\\Users\\arusc\\OneDrive\\Desktop\\DATASET TESI\\" +
+                "voti anno 21-22\\VotiGiornata"+i+".xlsx");
         FileInputStream fileStream=new FileInputStream(file);
         XSSFWorkbook workbook = new XSSFWorkbook(fileStream);
         FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();

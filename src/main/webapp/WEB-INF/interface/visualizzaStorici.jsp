@@ -2,6 +2,8 @@
 <%@ page import="model.storico.Storico" %>
 <%@ page import="model.calendario.Calendario" %>
 <%@ page import="java.text.DecimalFormat" %>
+<%@ page import="java.math.BigDecimal" %>
+<%@ page import="java.math.RoundingMode" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -29,6 +31,8 @@
         }
     </style>
     <title>Storici</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg text-dark" style="background-color: #eb9021">
@@ -65,7 +69,6 @@
         </div>
     </div>
 </nav><!-- NAVBAR -->
-
 <% int giornata= (int) request.getSession().getAttribute("prossimaGiornata");%>
 <div class="row">
     <div class="col-sm-1 p-3 text-dark"></div>
@@ -73,7 +76,7 @@
         <%int i=0; ArrayList<Storico> storici= (ArrayList<Storico>) request.getSession().getAttribute("storici");
         %>
         <h3>Storici - Regola del 72 </h3>
-        <table class="table table-hover table-striped">
+        <table class="table table-hover table-striped" id="tableRegola">
             <tr class="table-danger allinea">
                 <td>Giornata</td>
                 <td>Totale Predetto</td>
@@ -86,17 +89,18 @@
                     <% request.getSession().setAttribute("storicoNull",false);%>
                 </c:when>
                 <c:otherwise>
-                    <%DecimalFormat df = new DecimalFormat("#.00");%>
                     <c:forEach items="${storici}" var="storico">
                         <%Storico storico = storici.get(i); i++;%>
                         <tr class="allinea">
                             <td><%=storico.getnGiornata()%></td>
-                            <td><%=df.format(storico.getTotalePredetto())%></td>
-                            <td><%=storico.getTotaleVero()%></td>
+                            <%BigDecimal bd = new BigDecimal(storico.getTotalePredetto()).setScale(2, RoundingMode.HALF_UP);%>
+                            <td id="totalePredetto"><%=bd%></td>
+                            <td id="totaleVero"><%=storico.getTotaleVero()%></td>
                             <%Double scarto=storico.getTotalePredetto()-storico.getTotaleVero();
                                 if (scarto<0)
                                     scarto=scarto*(-1);%>
-                            <td><%=df.format(scarto)%></td>
+                            <%BigDecimal bd2 = new BigDecimal(scarto).setScale(2, RoundingMode.HALF_UP);%>
+                            <td><%=bd2%></td>
                         </tr>
                     </c:forEach>
                 </c:otherwise>
@@ -121,7 +125,14 @@
         </table>
     </div> <!--DIV PROSSIMA GIORNATA-->
     <div class="col-sm-1 p-3 text-dark"></div>
-</div>
+</div> <!--1°riga - tabellaRegola e prossima giornata-->
+<div class="row">
+    <div class="col-sm-1 p-3 text-dark"></div>
+    <div class="col-sm-7">
+        <canvas id="canvas"></canvas>
+    </div>
+    <div class="col-sm-4 p-3 text-dark"></div>
+</div> <!--2°riga - grafico Regola-->
 <div class="row">
     <div class="col-sm-1 p-3 text-dark"></div>
     <div class="col-sm-7 p-3 text-dark">
@@ -130,7 +141,7 @@
             ArrayList<Storico> storiciModulo= (ArrayList<Storico>) request.getSession().getAttribute("storiciModulo");
         %>
         <h3>Storici - Best Modulo </h3>
-        <table class="table table-hover table-striped allinea">
+        <table class="table table-hover table-striped allinea" id="tableModulo">
             <tr class="table-danger">
                 <td>Giornata</td>
                 <td>Totale Predetto</td>
@@ -143,17 +154,18 @@
                     <% request.getSession().setAttribute("storicoModuloNull",false);%>
                 </c:when>
                 <c:otherwise>
-                    <%DecimalFormat df = new DecimalFormat("#.00");%>
                     <c:forEach items="${storiciModulo}" var="storicoM">
                         <%Storico storicoM = storiciModulo.get(i); i++;%>
                         <tr class="allinea">
                             <td><%=storicoM.getnGiornata()%></td>
-                            <td><%=df.format(storicoM.getTotalePredetto())%></td>
-                            <td><%=storicoM.getTotaleVero()%></td>
+                            <%BigDecimal bd3 = new BigDecimal(storicoM.getTotalePredetto()).setScale(2, RoundingMode.HALF_UP);%>
+                            <td id="totalePredetto2"><%=bd3%></td>
+                            <td id="totaleVero2"><%=storicoM.getTotaleVero()%></td>
                             <%Double scarto=storicoM.getTotalePredetto()-storicoM.getTotaleVero();
                             if (scarto<0)
                                 scarto=scarto*(-1);%>
-                            <td><%=df.format(scarto)%></td>
+                            <%BigDecimal bd4 = new BigDecimal(scarto).setScale(2, RoundingMode.HALF_UP);%>
+                            <td><%=bd4%></td>
                         </tr>
                     </c:forEach>
                 </c:otherwise>
@@ -161,6 +173,159 @@
         </table>
     </div> <!--DIV VISUALIZZA STORICI MODULO-->
     <div class="col-sm-4 p-3 text-dark"></div>
-</div>
+</div> <!--3°riga - tabellaModulo-->
+<div class="row">
+    <div class="col-sm-1 p-3 text-dark"></div>
+    <div class="col-sm-7">
+        <canvas id="canvas2"></canvas>
+    </div>
+    <div class="col-sm-4 p-3 text-dark"></div>
+</div> <!--4°riga - grafico Modulo-->
+<script>
+    var totPredetto=[];
+    var totVero=[];
+    var Table = document.getElementById('tableRegola');
+    var rowLength = Table.rows.length;
+    var i;
+    for (i = 0; i < rowLength; i++){
+        var oCells = Table.rows.item(i).cells;
+        var cellLength = oCells.length;
+        var j;
+        for(j = 0; j < cellLength; j++){
+            var cellVal = oCells.item(j).innerHTML;
+            if (oCells.item(j).getAttribute("id")=='totalePredetto'){
+                totPredetto.push(cellVal)
+            }
+            if (oCells.item(j).getAttribute("id")=='totaleVero') {
+                totVero.push(cellVal)
+            }
+        }
+    }
+    var totPredettoModulo=[];
+    var TableModulo = document.getElementById('tableModulo');
+    var rowLengthModulo = TableModulo.rows.length;
+    for (i = 0; i < rowLengthModulo; i++){
+        var oCellsModulo = TableModulo.rows.item(i).cells;
+        var cellLengthModulo = oCellsModulo.length;
+        for( j = 0; j < cellLengthModulo; j++){
+            var cellValModulo = oCellsModulo.item(j).innerHTML;
+            if (oCellsModulo.item(j).getAttribute("id")=='totalePredetto2'){
+                totPredettoModulo.push(cellValModulo)
+            }
+        }
+    }
+    function myFunction(value) {parseFloat(value);}
+    totPredetto.forEach(myFunction);
+    totVero.forEach(myFunction);
+    totPredettoModulo.forEach(myFunction);
+
+    var lineChartData = {
+        labels: ["5", "6", "7", "8","9","10",
+            "11", "12", "13", "14", "15", "16", "17", "18","19","20",
+            "21", "22", "23", "24", "25", "26", "27", "28","29","30",
+            "31", "32", "33", "34", "35", "36", "37", "38"],
+        datasets: [{
+            fillColor: "rgba(220,220,220,0)",
+            strokeColor: "rgba(220,180,0,1)",
+            pointColor: "rgba(220,180,0,1)",
+            data: totPredetto
+        }, {
+            fillColor: "rgba(151,187,205,0)",
+            strokeColor: "rgba(151,187,205,1)",
+            pointColor: "rgba(151,187,205,1)",
+            data: totVero
+        }]
+    }
+    var lineChartData2 = {
+        labels: ["5", "6", "7", "8","9","10",
+            "11", "12", "13", "14", "15", "16", "17", "18","19","20",
+            "21", "22", "23", "24", "25", "26", "27", "28","29","30",
+            "31", "32", "33", "34", "35", "36", "37", "38"],
+        datasets: [{
+            fillColor: "rgba(220,220,220,0)",
+            strokeColor: "rgba(220,180,0,1)",
+            pointColor: "rgba(220,180,0,1)",
+            data: totPredettoModulo
+        }, {
+            fillColor: "rgba(151,187,205,0)",
+            strokeColor: "rgba(151,187,205,1)",
+            pointColor: "rgba(151,187,205,1)",
+            data: totVero
+        }]
+    }
+    Chart.defaults.global.animationSteps = 50;
+    Chart.defaults.global.tooltipYPadding = 16;
+    Chart.defaults.global.tooltipCornerRadius = 0;
+    Chart.defaults.global.tooltipTitleFontStyle = "normal";
+    Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
+    Chart.defaults.global.animationEasing = "easeOutBounce";
+    Chart.defaults.global.responsive = true;
+    Chart.defaults.global.scaleLineColor = "black";
+    Chart.defaults.global.scaleFontSize = 16;
+
+    var ctx = document.getElementById("canvas").getContext("2d");
+    var LineChartDemo = new Chart(ctx).Line(lineChartData, {
+        pointDotRadius: 10,
+        bezierCurve: false,
+        scaleShowVerticalLines: false,
+        scaleGridLineColor: "black"
+    });
+    var ctx2 = document.getElementById("canvas2").getContext("2d");
+    var LineChartDemo2 = new Chart(ctx2).Line(lineChartData2, {
+        pointDotRadius: 10,
+        bezierCurve: false,
+        scaleShowVerticalLines: false,
+        scaleGridLineColor: "black"
+    });
+
+</script>
+
+
+<!--
+<script>
+const labels = ['5', '6', '7', '8', '9', '10',
+        '11', '12', '13', '14', '15', '16', '17','18', '19', '20',
+        '21', '22', '23', '24', '25', '26', '27', '28', '29', '30',
+        '31', '32', '33', '34', '35', '36', '37', '38',
+    ];
+
+    const data = {
+        labels: labels,
+        datasets: [{
+            label: 'My First dataset',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: totPredetto,
+        }]
+    };
+    const data2 = {
+        labels: labels,
+        datasets: [{
+            label: 'My Second dataset',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: totVero,
+        }]
+    };
+
+    const config = {
+        type: 'line',
+        data: data, data2,
+        options: {}
+    };
+</script>
+<script>
+    const myChart = new Chart(
+        document.getElementById('canvas'),
+        config
+    );
+
+
+
+
+
+</script>-->
+
+
 </body>
 </html>

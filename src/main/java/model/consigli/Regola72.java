@@ -117,7 +117,6 @@ public class Regola72 {
         }
     }
     public ArrayList<Calciatore> search(){
-        Calciatore x;
         //portieri
         por=this.aggiornaLista(por);
         Collections.sort(por,new ComparatorDecrescente());
