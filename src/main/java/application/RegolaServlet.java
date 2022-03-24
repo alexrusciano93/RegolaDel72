@@ -129,11 +129,11 @@ public class RegolaServlet extends HttpServlet {
                     for(int i=0; i<statisticheRegola.size(); i++){
                         Storico x=statisticheRegola.get(i);
                         if (x.getTotaleVero()==0.0 && x.getnGiornata()<prossima){
-                            ArrayList<CalSto> oldSquadra=csDAO.doRetrieveCalciatoriWithStorico(x.getnGiornata());
+                            ArrayList<CalSto> oldTeam=csDAO.doRetrieveCalciatoriWithStoricoAndRegola(x.getnGiornata(),true);
+                            System.out.println(oldTeam.size());
                             ArrayList<Voto> oldVoto=votoDAO.doRetrieveByGiornata(x.getnGiornata());
-                            Double trueTot=reg.calcolaTot(oldSquadra,oldVoto);
-                            if (oldSquadra.size()>11)
-                                trueTot=trueTot/2;
+                            Double trueTot=reg.calcolaTot(oldTeam,oldVoto);
+                            System.out.println("Totale Vero Regola:"+trueTot);
                             x.setTotaleVero(trueTot);
                             stoDAO.doChanges(x);
                             statisticheRegola.remove(i);
@@ -151,11 +151,10 @@ public class RegolaServlet extends HttpServlet {
                     for(int i=0; i<statisticheModulo.size(); i++){
                         Storico x=statisticheModulo.get(i);
                         if (x.getTotaleVero()==0.0 && x.getnGiornata()<prossima){
-                            ArrayList<CalSto> oldSquadra=csDAO.doRetrieveCalciatoriWithStorico(x.getnGiornata());
+                            ArrayList<CalSto> oldSquadra=csDAO.doRetrieveCalciatoriWithStoricoAndRegola(x.getnGiornata(),false);
                             ArrayList<Voto> oldVoto=votoDAO.doRetrieveByGiornata(x.getnGiornata());
                             Double trueTot=reg.calcolaTot(oldSquadra,oldVoto);
-                            if (oldSquadra.size()>11)
-                                trueTot=trueTot/2;
+                            System.out.println("Totale Vero Modulo:"+trueTot);
                             x.setTotaleVero(trueTot);
                             stoDAO.doChanges(x);
                             statisticheModulo.remove(i);

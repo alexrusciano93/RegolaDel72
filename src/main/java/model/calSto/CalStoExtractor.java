@@ -19,10 +19,12 @@ public class CalStoExtractor implements ResultSetExtractor {
         CalSto cs=new CalSto();
         int codCalciatore=rs.getInt("cs.cal_fk");
         int storico=rs.getInt("cs.sto_fk");
+        boolean reg=rs.getBoolean("cs.regola");
         Calciatore c=cDAO.doRetrieveByCod(codCalciatore);
         cs.setCalciatore(c);
-        Storico s=sDAO.doRetrieveByGiornata(storico);
+        Storico s=sDAO.doRetrieveByGiornataAndRegola(storico,reg);
         cs.setStorico(s);
+        cs.setRegola(reg);
         return cs;
     }
 }

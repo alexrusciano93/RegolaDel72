@@ -15,14 +15,24 @@ public class CalSto {
     public Storico getStorico() { return storico; }
     public void setStorico(Storico storico) { this.storico = storico; }
 
+    public Boolean getRegola() {
+        return regola;
+    }
+
+    public void setRegola(Boolean regola) {
+        this.regola = regola;
+    }
+
     @Override
     public String toString() {
         return "CalSto{" +
-                "calciatore=" + calciatore +
+                "regola=" + regola +
+                ", calciatore=" + calciatore +
                 ", storico=" + storico +
                 '}';
     }
 
+    private Boolean regola;
     private Calciatore calciatore;
     private Storico storico;
 }

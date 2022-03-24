@@ -43,7 +43,8 @@ create table calSto
     idCalSto           int         not null AUTO_INCREMENT
         primary key,
     cal_fk   int not null,
-    sto_fk   int not null
+    sto_fk   int not null,
+    regola   boolean not null
 );
 
 create table squadra

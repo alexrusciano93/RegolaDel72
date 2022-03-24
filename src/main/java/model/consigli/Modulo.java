@@ -6,6 +6,7 @@ import model.calendario.Calendario;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class Modulo {
@@ -91,42 +92,56 @@ public class Modulo {
     }
     private static void trova(ArrayList<Calciatore> lista,HashMap<Integer,Double> diff, int quanti, ArrayList<Calciatore> consigliati) {
         ArrayList<Calciatore> best = new ArrayList<>();
-        for (int i=0; i<quanti; i++)  //Inserisco "quanti" Calciatori in Best
-            best.add(lista.get(i));
-
-        int altri=lista.size()-quanti;
-        if (altri>0) {//Se vi sono altri Calciatori in Lista
-            System.out.println("\nSIAMO DENTRO TROVA\nCalciatori inseriti in Best:"+best.size());
-            System.out.println("Rimasti:");
-            for (int i = quanti; i < lista.size(); i++) { // Per ogni Calciatore rimasto
-                Calciatore x=lista.get(i);
-                System.out.println(i+")"+x.getNome());
-                Double diffX=diff.get(x.getCod());
-                System.out.println("Confronto con i Best:");
-                for (int j=0; j<best.size(); j++){ // Per ogni Calciatore in Best
-                    Calciatore y=best.get(j);
-                    System.out.println("            "+y.getNome());
-                    Double diffY=diff.get(y.getCod());
-                    if (diffX<diffY){
+        Collections.sort(lista,new ComparatorDecrescente()); //ordino la lista dei candidati per la media decrescente
+        if (quanti==lista.size()){
+            for (int i=0; i<lista.size(); i++)
+                best.add(lista.get(i));
+        }else {
+            for (int i = 0; i < quanti; i++)  //Inserisco "quanti" Calciatori in Best
+                best.add(lista.get(i));
+            int altri = lista.size() - quanti;
+            if (altri > 0) {//Se vi sono altri Calciatori in Lista
+                for (int i = quanti; i < lista.size(); i++) { // Per ogni Calciatore rimasto
+                    Calciatore x = lista.get(i);
+                    Double diffX = diff.get(x.getCod());
+                    for (int j = 0; j < best.size(); j++) { // Per ogni Calciatore in Best
+                        Calciatore y = best.get(j);
+                        Double diffY = diff.get(y.getCod());
+                        Double intornoMAX=diffY+0.5;
+                        Double intornoMIN=diffY-0.5;
+                        if (diffX<=intornoMAX && diffX>=intornoMIN){ //Se la difficoltà di 1 degli altri è nell'intorno
+                            if (x.getQuotazione()>y.getQuotazione()) { //Se la quotazione di 1 degli altri è >
+                                best.remove(j);
+                                best.add(j,x);
+                                break;
+                            }
+                        }
+                        if (diffX<intornoMIN){ //Se Difficoltà di 1 degli altri è Minore di 1 best
+                                best.remove(j);
+                                best.add(j,x);
+                                break;
+                        }
+                       /*
+                        if (diffX < diffY) {
                             best.remove(j);
-                            best.add(j,x);
+                            best.add(j, x);
                             break;
                         }  //Se Difficoltà di X è Minore di Y
-                    if (diffX==diffY){
-                        if (x.getMedia()>y.getMedia()) {
-                            best.remove(j);
-                            best.add(j,x);
-                            break;
-                        }
-                    } //Se Difficoltà di X è uguale a Difficoltà di Y -> Controllo la Media tra i due
+                        if (diffX == diffY) {
+                            if (x.getMedia() > y.getMedia()) {
+                                best.remove(j);
+                                best.add(j, x);
+                                break;
+                            }
+                        } //Se Difficoltà di X è uguale a Difficoltà di Y -> Controllo la Media tra i due
+                        */
+                    }
                 }
-            }
-            for(Calciatore c: best){
-                consigliati.add(c);
-            }
-        }       //per ognuno che rimane controllo se è migliore dei Best inseriti.
-
-        System.out.println("SIAMO FUORI TROVA\n");
+            }       //per ognuno che rimane controllo se è migliore dei Best inseriti.
+        }
+        for (Calciatore c : best) {
+            consigliati.add(c);
+        }
     }
 
 

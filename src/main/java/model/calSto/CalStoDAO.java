@@ -20,9 +20,10 @@ public class CalStoDAO {
     public void addCalSto(Calciatore c, Storico s){
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
-                    "INSERT INTO calsto (cal_fk,sto_fk) VALUES(?,?)");
+                    "INSERT INTO calsto (cal_fk,sto_fk,regola) VALUES(?,?,?)");
             ps.setInt(1, c.getCod());
             ps.setInt(2, s.getnGiornata());
+            ps.setBoolean(3,s.getRegola());
             if (ps.executeUpdate() != 1) {
                 throw new RuntimeException("INSERT error.");
             }
@@ -42,6 +43,26 @@ public class CalStoDAO {
             String query = "SELECT * FROM calsto as cs WHERE cs.sto_fk = (?);";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, giornata);
+            ResultSet rs = ps.executeQuery();
+            CalStoExtractor csExt = new CalStoExtractor();
+            while(rs.next()) {
+                CalSto cs;
+                cs = csExt.extract(rs);
+                result.add(cs);
+            }
+        } catch (SQLException | IOException throwable) {
+            throwable.printStackTrace();
+        }
+        return result;
+    }
+
+    public ArrayList<CalSto> doRetrieveCalciatoriWithStoricoAndRegola(int giornata,boolean reg){
+        ArrayList<CalSto> result = new ArrayList<CalSto>();
+        try (Connection con = ConPool.getConnection()) {
+            String query = "SELECT * FROM calsto as cs WHERE cs.sto_fk = (?) AND cs.regola=(?);";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, giornata);
+            ps.setBoolean(2,reg);
             ResultSet rs = ps.executeQuery();
             CalStoExtractor csExt = new CalStoExtractor();
             while(rs.next()) {

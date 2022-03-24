@@ -202,6 +202,7 @@
         }
     }
     var totPredettoModulo=[];
+    var totVeroModulo=[];
     var TableModulo = document.getElementById('tableModulo');
     var rowLengthModulo = TableModulo.rows.length;
     for (i = 0; i < rowLengthModulo; i++){
@@ -212,12 +213,17 @@
             if (oCellsModulo.item(j).getAttribute("id")=='totalePredetto2'){
                 totPredettoModulo.push(cellValModulo)
             }
+            if (oCellsModulo.item(j).getAttribute("id")=='totaleVero2'){
+                totVeroModulo.push(cellValModulo)
+            }
         }
     }
     function myFunction(value) {parseFloat(value);}
     totPredetto.forEach(myFunction);
     totVero.forEach(myFunction);
     totPredettoModulo.forEach(myFunction);
+    totVeroModulo.forEach(myFunction)
+
 
     var lineChartData = {
         labels: ["5", "6", "7", "8","9","10",
@@ -250,7 +256,7 @@
             fillColor: "rgba(151,187,205,0)",
             strokeColor: "rgba(151,187,205,1)",
             pointColor: "rgba(151,187,205,1)",
-            data: totVero
+            data: totVeroModulo
         }]
     }
     Chart.defaults.global.animationSteps = 50;

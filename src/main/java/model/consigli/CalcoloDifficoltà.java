@@ -10,6 +10,7 @@ public class CalcoloDifficoltà {
     public static Double calcola(ArrayList<Calendario> giornata, Calciatore x){
         String squadra=x.getSquadra();
         String ruolo=x.getRuolo();
+        Integer quotazione=x.getQuotazione();
         Double difficolta=0.0;
         Squadra avversario=new Squadra();
         for(Calendario partita:giornata){
@@ -40,6 +41,16 @@ public class CalcoloDifficoltà {
                 difficolta=attacco;
                 break;
         }                   //controllo A -> difesa || D -> attacco || C -> difesa || P -> attacco
+
+        if(quotazione>=25){
+            difficolta-=2;
+        }
+        if(quotazione>=20){
+            difficolta-=1.5;
+        }
+        if(quotazione>=15){
+            difficolta-=1;
+        }
 
         return difficolta;
     }

@@ -54,6 +54,23 @@ public class StoricoDAO {
         }
     }
 
+    public Storico doRetrieveByGiornataAndRegola(int nGiornata, boolean regola){
+        Storico result=new Storico();
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    "SELECT * FROM storico as sto WHERE sto.n_giornata=? and sto.regola=?");
+            ps.setInt(1, nGiornata);
+            ps.setBoolean(2,regola);
+            ResultSet rs = ps.executeQuery();
+            StoricoExtractor stoExt= new StoricoExtractor();
+            if (rs.next()){
+                result=stoExt.extract(rs);
+            }
+            return result;
+        } catch (SQLException | IOException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
     /**
      * Elimina uno storico dalla base di dati data una giornata in input
      * @param giornata l'identificativo della giornata dello storico da eliminare
