@@ -21,6 +21,27 @@
         .text-size{
             font-size: 26px;
         }
+        .alert {
+            padding: 20px;
+            background-color: #f44336;
+            color: white;
+        }
+        .alert.info {background-color: #2196F3;}
+
+        .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .closebtn:hover {
+            color: black;
+        }
     </style>
     <title>CaricaVoti</title>
 </head>
@@ -60,15 +81,30 @@
         </div>
     </div>
 </nav><!-- NAVBAR -->
-
 <div class="row">
     <%int giornata= (int) request.getSession().getAttribute("prossimaGiornata");%>
     <div class="col-sm-1 p-3 text-dark"></div>
     <div class="col-sm-7 p-3 text-dark">
+        <a class="btn btn-warning" href="<%=request.getContextPath()%>/rs/sommario">Back</a>
+        <button class="btn btn-info" onclick="info()">Info</button>
+        <div class="alert info" id="info" style="display: none">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <strong>Seleziona la prossima giornata</strong> da caricare i voti.
+        </div>
+        <div>
+            <c:if test="${impossibileCaricare == 1}">
+                <div class="alert">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <strong>Errore!</strong> Carica la prossima giornata.
+                </div>
+                <%session.setAttribute("impossibileCaricare",0);%>
+            </c:if>
+        </div>
         <h4>Seleziona la giornata da Caricare:</h4>
         <% for(int i=giornata; i<39; i++){%>
         <a class="btn btn-primary" href="<%=request.getContextPath()%>/vs/caricaVoti?numGiornata=<%=i%>"><span><%=i%></span></a>
         <%}%>
+        <h4>Prossima giornata da Caricare: <%=giornata%></h4>
     </div> <!--DIV CARICA VOTI-->
     <div class="col-sm-3 p-3 text-dark">
         <%
@@ -89,6 +125,14 @@
     </div> <!--DIV PROSSIMA GIORNATA-->
     <div class="col-sm-1 p-3 text-dark"></div>
 </div>
-
+<script>
+    function info() {
+        var x = document.getElementById("info");
+        if (x.style.display === "none")
+            x.style.display = "block";
+        else
+            x.style.display = "none";
+    }
+</script>
 </body>
 </html>

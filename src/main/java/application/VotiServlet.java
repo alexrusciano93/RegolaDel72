@@ -32,13 +32,18 @@ public class VotiServlet extends HttpServlet {
         String path = (request.getPathInfo() != null) ? request.getPathInfo() : "/";
         switch (path) {
             case "/carica":
+                session.setAttribute("impossibileCaricare",0);
                 request.getRequestDispatcher("/WEB-INF/interface/carica.jsp").forward(request, response);
                 break;
             case "/caricaVoti":
                 String x=request.getParameter("numGiornata");
                 int giornata=Integer.parseInt(x);
                 int prossima= (int) session.getAttribute("prossimaGiornata");
-                if (giornata!=prossima){/*errore da gestire poi con un alert */}
+                if (giornata!=prossima){
+                    session.setAttribute("impossibileCaricare",1);
+                    request.getRequestDispatcher("/WEB-INF/interface/carica.jsp").forward(request, response);
+                    break;
+                }
                 /*if (giornata>=5){
                     giornata-=4;
                     for (int i=giornata; i>0; i--)

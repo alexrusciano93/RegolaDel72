@@ -27,6 +27,27 @@
         .allinea{
             text-align: center;
         }
+        .alert {
+            padding: 20px;
+            background-color: #f44336;
+            color: white;
+        }
+        .alert.info {background-color: #2196F3;}
+
+        .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .closebtn:hover {
+            color: black;
+        }
     </style>
     <title>VisualizzaVoti</title>
 </head>
@@ -78,6 +99,12 @@
             int ultimaGiornata= (int) request.getSession().getAttribute("ultimaGiornata");
             VotoDAO votoDAO=new VotoDAO();
         %> <!--Prelevo gli ultimi 4 Voti -->
+        <a class="btn btn-warning" href="<%=request.getContextPath()%>/rs/sommario">Back</a>
+        <button class="btn btn-info" onclick="info()">Info</button>
+        <div class="alert info" id="info" style="display: none">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <strong>Visualizza</strong> le ultime quattro prestazioni della tua rosa.
+        </div>
 
         <%int i=0; ArrayList<Calciatore> portieri = (ArrayList<Calciatore>) request.getSession().getAttribute("portieri"); %>
         <table class="table table-hover allinea">
@@ -212,7 +239,15 @@
     </div> <!--DIV PROSSIMA GIORNATA-->
     <div class="col-sm-1 p-3 text-dark"></div>
 </div>
-
+<script>
+    function info() {
+        var x = document.getElementById("info");
+        if (x.style.display === "none")
+            x.style.display = "block";
+        else
+            x.style.display = "none";
+    }
+</script>
 
 </body>
 </html>

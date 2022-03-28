@@ -26,6 +26,28 @@
         .allinea{
             text-align: center;
         }
+        .alert {
+            padding: 20px;
+            background-color: #f44336;
+            color: white;
+        }
+        .alert.info {background-color: #2196F3;}
+        .alert.success {background-color: #04AA6D;}
+
+        .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .closebtn:hover {
+            color: black;
+        }
     </style>
     <title>BestModulo</title>
 </head>
@@ -74,6 +96,19 @@
             int i=0;
             ArrayList<Calciatore> consigliati = (ArrayList<Calciatore>) request.getSession().getAttribute("consigliati");
         %> <!--Carico consigliati-->
+        <a class="btn btn-warning" href="<%=request.getContextPath()%>/rs/sommario">Back</a>
+        <button class="btn btn-info" onclick="info()">Info</button>
+        <div class="alert info" id="info" style="display: none">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <strong>Squadra consigliata dall'algoritmo Best Modulo.</strong>
+        </div>
+        <c:if test="${okSalvato == 1}">
+            <div class="alert success">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                <strong>Salvato Storico Best Modulo</strong> per la prossima giornata.
+            </div>
+            <%session.setAttribute("okSalvato",0);%>
+        </c:if>
         <table class="table table-hover">
             <tr class="table-danger allinea">
                 <th>Ruolo</th>
@@ -95,7 +130,7 @@
                 <td class="table-danger text-danger allinea"><%=df.format(somma)%></td>
             </tr>
         </table> <!--Formazione BEST MODULO-->
-        <a class="btn btn-danger" href="<%=request.getContextPath()%>/RegS/salva?reg=0" onclick="confermaSalva()"><span>Salva Formazione</span></a>
+        <a class="btn btn-danger" href="<%=request.getContextPath()%>/RegS/salva?reg=0" ><span>Salva Formazione</span></a>
     </div> <!--DIV VISUALIZZA MODULO -->
     <div class="col-sm-3 p-3 text-dark">
         <%
@@ -117,8 +152,12 @@
     <div class="col-sm-1 p-3 text-dark"></div>
 </div>
 <script>
-    function confermaSalva() {
-        alert("Formazione Salvata!");
+    function info() {
+        var x = document.getElementById("info");
+        if (x.style.display === "none")
+            x.style.display = "block";
+        else
+            x.style.display = "none";
     }
 </script>
 </body>

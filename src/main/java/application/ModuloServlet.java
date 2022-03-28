@@ -88,6 +88,7 @@ public class ModuloServlet extends HttpServlet {
                     somma+=x.getMedia();
                 session.setAttribute("sommaConsigliati",somma);
                 session.setAttribute("consigliati",best);
+                session.setAttribute("okSalvato",0);
                 request.getRequestDispatcher("/WEB-INF/interface/visualizzaModulo.jsp").forward(request, response);
                 break;
         }

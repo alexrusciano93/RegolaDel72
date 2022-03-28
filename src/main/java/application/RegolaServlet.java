@@ -83,6 +83,7 @@ public class RegolaServlet extends HttpServlet {
                     somma+=x.getMedia();
                 session.setAttribute("sommaConsigliati",somma);
                 session.setAttribute("consigliati",consigliati);
+                session.setAttribute("okSalvato",0);
                 request.getRequestDispatcher("/WEB-INF/interface/visualizzaRegola.jsp").forward(request, response);
                 break;
             case "/salva":
@@ -116,6 +117,7 @@ public class RegolaServlet extends HttpServlet {
                     statisticheRegola.add(salva);
                 else
                     statisticheModulo.add(salva);
+                session.setAttribute("okSalvato",1);
                 session.setAttribute("storici",statisticheRegola);
                 session.setAttribute("storiciModulo",statisticheModulo); //Salvo in Sessione gli storici x Regola e x Modulo per visualizzarli
                 request.getRequestDispatcher("/WEB-INF/interface/visualizzaRegola.jsp").forward(request, response);

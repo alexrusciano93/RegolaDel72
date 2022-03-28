@@ -29,6 +29,27 @@
         .allinea{
             text-align: center;
         }
+        .alert {
+            padding: 20px;
+            background-color: #f44336;
+            color: white;
+        }
+        .alert.info {background-color: #2196F3;}
+
+        .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .closebtn:hover {
+            color: black;
+        }
     </style>
     <title>Storici</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -75,6 +96,12 @@
     <div class="col-sm-7 p-3 text-dark">
         <%int i=0; ArrayList<Storico> storici= (ArrayList<Storico>) request.getSession().getAttribute("storici");
         %>
+        <a class="btn btn-warning" href="<%=request.getContextPath()%>/rs/sommario">Back</a>
+        <button class="btn btn-info" onclick="info()">Info</button>
+        <div class="alert info" id="info" style="display: none">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <strong>Visualizza i risultati</strong> dei due algoritmi con relativo grafico per ogni singolo Storico salvato.
+        </div>
         <h3>Storici - Regola del 72 </h3>
         <table class="table table-hover table-striped" id="tableRegola">
             <tr class="table-danger allinea">
@@ -284,6 +311,13 @@
         scaleGridLineColor: "black"
     });
 
+    function info() {
+        var x = document.getElementById("info");
+        if (x.style.display === "none")
+            x.style.display = "block";
+        else
+            x.style.display = "none";
+    }
 </script>
 
 

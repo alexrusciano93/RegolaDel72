@@ -25,6 +25,27 @@
         .allinea{
             text-align: center;
         }
+        .alert {
+            padding: 20px;
+            background-color: #f44336;
+            color: white;
+        }
+        .alert.info {background-color: #2196F3;}
+
+        .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .closebtn:hover {
+            color: black;
+        }
     </style>
     <title>Rosa</title>
 </head>
@@ -75,6 +96,12 @@
 <div class="row">
     <div class="col-sm-1 p-3 text-dark"></div>
     <div class="col-sm-7 p-3 text-dark">
+        <a class="btn btn-warning" href="<%=request.getContextPath()%>/rs/sommario">Back</a>
+        <button class="btn btn-info" onclick="info()">Info</button>
+        <div class="alert info" id="info" style="display: none">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <strong>Seleziona Indisponibili</strong> per la prossima giornata, Calciatori che sono squalificati,infortunati ecc.
+        </div>
         <h4>Indica Indisponibili per la prossima giornata:</h4>
         <%
             int i=0;
@@ -152,7 +179,15 @@
     </div> <!--DIV PROSSIMA GIORNATA-->
     <div class="col-sm-1 p-3 text-dark"></div>
 </div>
-
+<script>
+    function info() {
+        var x = document.getElementById("info");
+        if (x.style.display === "none")
+            x.style.display = "block";
+        else
+            x.style.display = "none";
+    }
+</script>
 
 </body>
 </html>
