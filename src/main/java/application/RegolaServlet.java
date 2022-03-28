@@ -96,11 +96,21 @@ public class RegolaServlet extends HttpServlet {
                 salva.setnGiornata(giornata);
                 salva.setTotalePredetto(tot);
                 salva.setTotaleVero(0.0);
-                if (regola==1)
+                if (regola==1) {
                     salva.setRegola(true);
-                else
-                    salva.setRegola(false); // setto parametri Storico
-
+                    Storico copia=stoDAO.doRetrieveByGiornataAndRegola(salva.getnGiornata(),true);
+                    if (copia.getnGiornata()==salva.getnGiornata()){
+                        request.getRequestDispatcher("/WEB-INF/interface/visualizzaRegola.jsp").forward(request, response);
+                        break;
+                    }
+                }else {
+                    salva.setRegola(false);
+                    Storico copia=stoDAO.doRetrieveByGiornataAndRegola(salva.getnGiornata(),false);
+                    if (copia.getnGiornata()==salva.getnGiornata()){
+                        request.getRequestDispatcher("/WEB-INF/interface/visualizzaModulo.jsp").forward(request, response);
+                        break;
+                    }
+                }
                 try { stoDAO.addStorico(salva); } //Salvo la predizione nel DB
                 catch (SQLException throwables) { throwables.printStackTrace(); }
 
@@ -120,7 +130,10 @@ public class RegolaServlet extends HttpServlet {
                 session.setAttribute("okSalvato",1);
                 session.setAttribute("storici",statisticheRegola);
                 session.setAttribute("storiciModulo",statisticheModulo); //Salvo in Sessione gli storici x Regola e x Modulo per visualizzarli
-                request.getRequestDispatcher("/WEB-INF/interface/visualizzaRegola.jsp").forward(request, response);
+                if (regola==1)
+                    request.getRequestDispatcher("/WEB-INF/interface/visualizzaRegola.jsp").forward(request, response);
+                else
+                    request.getRequestDispatcher("/WEB-INF/interface/visualizzaModulo.jsp").forward(request, response);
                 break;
             case "/storico":
                 statisticheRegola= (ArrayList<Storico>) session.getAttribute("storici");

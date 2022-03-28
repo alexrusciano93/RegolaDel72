@@ -24,6 +24,27 @@
         .allinea{
             text-align: center;
         }
+        .alert {
+            padding: 20px;
+            background-color: #f44336;
+            color: white;
+        }
+        .alert.info {background-color: #2196F3;}
+
+        .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .closebtn:hover {
+            color: black;
+        }
     </style>
     <title>Scelta</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -176,9 +197,17 @@
 
     </div> <!--DIV spazio-->
     <div class="col-sm-6 p-3 text-dark">
+        <a class="btn btn-warning" href="<%=request.getContextPath()%>/rs/sommario">Back</a>
+        <button class="btn btn-info" onclick="info()">Info</button>
+        <div class="alert info" id="info" style="display: none">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <strong>Seleziona Calciatori</strong> da inserire nella tua fantasquadra.
+        </div>
+
         <h3><c:out value="${ruolo}"></c:out></h3>
         <form action="<%=request.getContextPath()%>/rs/salva" method="post">
             <input type="submit" value="Salva" class="btn btn-success">
+
             <table class="table table-hover table-striped allinea" id="calciatori">
                 <tr>
                     <th onclick="sortTable(0)">Calciatore</th>
@@ -206,6 +235,14 @@
     </div> <!--DIV spazio-->
 </div>
 
-
+<script>
+    function info() {
+        var x = document.getElementById("info");
+        if (x.style.display === "none")
+            x.style.display = "block";
+        else
+            x.style.display = "none";
+    }
+</script>
 </body>
 </html>

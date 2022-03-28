@@ -53,6 +53,7 @@ public class RosaServlet extends HttpServlet {
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
+                session.setAttribute("ultimaGiornata",0);
                 session.setAttribute("prossimaGiornata",1);
                 response.sendRedirect(address + "/rs/sommario");
                 break;
