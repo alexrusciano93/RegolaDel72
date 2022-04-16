@@ -145,10 +145,8 @@ public class RegolaServlet extends HttpServlet {
                         Storico x=statisticheRegola.get(i);
                         if (x.getTotaleVero()==0.0 && x.getnGiornata()<prossima){
                             ArrayList<CalSto> oldTeam=csDAO.doRetrieveCalciatoriWithStoricoAndRegola(x.getnGiornata(),true);
-                            System.out.println(oldTeam.size());
                             ArrayList<Voto> oldVoto=votoDAO.doRetrieveByGiornata(x.getnGiornata());
                             Double trueTot=reg.calcolaTot(oldTeam,oldVoto);
-                            System.out.println("Totale Vero Regola:"+trueTot);
                             x.setTotaleVero(trueTot);
                             stoDAO.doChanges(x);
                             statisticheRegola.remove(i);
@@ -169,7 +167,6 @@ public class RegolaServlet extends HttpServlet {
                             ArrayList<CalSto> oldSquadra=csDAO.doRetrieveCalciatoriWithStoricoAndRegola(x.getnGiornata(),false);
                             ArrayList<Voto> oldVoto=votoDAO.doRetrieveByGiornata(x.getnGiornata());
                             Double trueTot=reg.calcolaTot(oldSquadra,oldVoto);
-                            System.out.println("Totale Vero Modulo:"+trueTot);
                             x.setTotaleVero(trueTot);
                             stoDAO.doChanges(x);
                             statisticheModulo.remove(i);

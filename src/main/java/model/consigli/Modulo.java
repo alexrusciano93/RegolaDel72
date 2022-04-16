@@ -100,11 +100,11 @@ public class Modulo {
             for (int i = 0; i < quanti; i++)  //Inserisco "quanti" Calciatori in Best
                 best.add(lista.get(i));
             int altri = lista.size() - quanti;
-            if (altri > 0) {//Se vi sono altri Calciatori in Lista
-                for (int i = quanti; i < lista.size(); i++) { // Per ogni Calciatore rimasto
+            if (altri > 0) { //Se vi sono altri Calciatori in Lista
+                for (int i = quanti; i < lista.size(); i++) { //Per ogni Calciatore rimasto
                     Calciatore x = lista.get(i);
                     Double diffX = diff.get(x.getCod());
-                    for (int j = 0; j < best.size(); j++) { // Per ogni Calciatore in Best
+                    for (int j = 0; j < best.size(); j++) { //Per ogni Calciatore in Best
                         Calciatore y = best.get(j);
                         Double diffY = diff.get(y.getCod());
                         Double intornoMAX=diffY+0.5;

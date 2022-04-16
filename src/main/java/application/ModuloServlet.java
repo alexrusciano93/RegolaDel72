@@ -79,7 +79,6 @@ public class ModuloServlet extends HttpServlet {
                 mod.controlloCalendario(cDAO.doRetrieveByGiornata(g));
                 ArrayList<Calciatore> best=mod.calcoloModuli();
                 String modulo=mod.getModuloConsigliato();
-                System.out.println("Calciatori:\n"+best);
                 System.out.println("Modulo Consigliato:"+modulo);
 
                 //Carico Lista Best e Totale predetto

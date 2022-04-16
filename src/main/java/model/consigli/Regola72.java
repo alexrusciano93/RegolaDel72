@@ -140,17 +140,30 @@ public class Regola72 {
     }
     public Double calcolaTot(ArrayList<CalSto> squadra,ArrayList<Voto> giornata){
         Double tot=0.0;
+        int riserve=3;
+        int countPlayer=0;
+        System.out.println("giornata: "+giornata.get(0).getnGiornata());
         for (CalSto x:squadra){
             int codiceCal=x.getCalciatore().getCod();
             for (int i=0; i<giornata.size(); i++){
-                if (codiceCal==giornata.get(i).getCalciatore().getCod())
-                    tot+=giornata.get(i).getVoto();
+                if (codiceCal==giornata.get(i).getCalciatore().getCod()) {
+                    countPlayer++;
+                    Double voto=giornata.get(i).getVoto();
+                    if (voto.equals(0.0) && riserve>0){
+                        riserve--;
+                        tot+=5.0;
+                    } else {
+                        tot += giornata.get(i).getVoto();
+                    }
+                }
             }
         }
+        countPlayer+=(3-riserve);
+        System.out.println("giocatori CONTEGGIATI: "+countPlayer);
+        if (countPlayer<11)
+            tot=tot+(5.0*(11-countPlayer));
         return tot;
     }
-
-
 
     private ArrayList<Voto> giornata1,giornata2,giornata3,giornata4;
     private ArrayList<Calciatore> por,dif,cen,att;
